@@ -36,4 +36,21 @@ class Veicule {
       bool_haspaidearly: json["bool_haspaidearly"],
     );
   }
+
+  // convert to json for the API Post.
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> map = {
+      "id_veiculo": id_veiculo,
+      "str_license": str_license,
+      "str_timein": str_timein,
+      "str_timeout": str_timeout,
+      "bool_issubscriber": bool_issubscriber,
+      "bool_haskey": bool_haskey,
+      "bool_ismotorbike": bool_ismotorbike,
+      "str_date": str_date,
+      "bool_haspaidearly": bool_haspaidearly
+    };
+
+    return map;
+  }
 }
