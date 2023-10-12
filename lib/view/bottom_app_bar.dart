@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 appBottomBar(BuildContext context, WidgetRef ref) {
   return BottomAppBar(
@@ -17,7 +18,9 @@ appBottomBar(BuildContext context, WidgetRef ref) {
             tooltip: "Home",
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              context.go('/');
+            },
             icon: const Icon(Icons.car_rental),
             tooltip: "Veículos",
           ),
@@ -25,7 +28,9 @@ appBottomBar(BuildContext context, WidgetRef ref) {
             width: 24,
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              context.go("/subscriber-view");
+            },
             icon: const Icon(Icons.card_membership),
             tooltip: "Mensalistas",
           ),

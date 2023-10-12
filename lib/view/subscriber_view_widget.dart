@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parking_app/controller/providers/api_services_provider.dart';
 import 'package:parking_app/view/bottom_app_bar.dart';
+import 'package:parking_app/view/fab.dart';
 
 class SubscriberViewWidget extends ConsumerWidget {
   const SubscriberViewWidget({super.key});
@@ -20,12 +21,9 @@ class SubscriberViewWidget extends ConsumerWidget {
       ),
       data: (subscriberList) {
         return Scaffold(
-          appBar: AppBar(),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {},
+          appBar: AppBar(
+            backgroundColor: Theme.of(context).colorScheme.primary,
           ),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
           bottomNavigationBar: appBottomBar(context, ref),
           body: GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
