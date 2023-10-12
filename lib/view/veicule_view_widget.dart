@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parking_app/controller/providers/api_services_provider.dart';
+import 'package:parking_app/view/bottom_app_bar.dart';
 
 class VeiculeViewWidget extends ConsumerWidget {
   const VeiculeViewWidget({super.key});
@@ -17,7 +18,14 @@ class VeiculeViewWidget extends ConsumerWidget {
         loading: () => const Center(child: CircularProgressIndicator()),
         data: (veiculeList) {
           return Scaffold(
-            appBar: AppBar(),
+            backgroundColor: Theme.of(context).colorScheme.secondary,
+            appBar: AppBar(
+              backgroundColor: Theme.of(context).colorScheme.primary,
+            ),
+            floatingActionButton: FloatingActionButton(onPressed: () {}),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerDocked,
+            bottomNavigationBar: appBottomBar(context, ref),
             body: GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
@@ -28,6 +36,7 @@ class VeiculeViewWidget extends ConsumerWidget {
                 return Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Card(
+                    color: Theme.of(context).colorScheme.primary,
                     child: InkWell(
                       borderRadius: BorderRadius.circular(12),
                       onTap: () {
@@ -35,9 +44,24 @@ class VeiculeViewWidget extends ConsumerWidget {
                       },
                       child: Column(
                         children: [
-                          Text(veiculeList[index].str_license),
-                          Text(veiculeList[index].str_timein),
-                          Text(veiculeList[index].str_timeout)
+                          Text(
+                            veiculeList[index].str_license,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.onPrimary,
+                            ),
+                          ),
+                          Text(
+                            veiculeList[index].str_timein,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.onPrimary,
+                            ),
+                          ),
+                          Text(
+                            veiculeList[index].str_timeout,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.onPrimary,
+                            ),
+                          )
                         ],
                       ),
                     ),
