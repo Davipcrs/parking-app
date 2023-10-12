@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parking_app/controller/providers/api_services_provider.dart';
 import 'package:parking_app/view/bottom_app_bar.dart';
-import 'package:parking_app/view/veicule_info_view.dart';
+import 'package:parking_app/view/fab.dart';
+import 'package:parking_app/view/veicule_info.dart';
 
 class VeiculeViewWidget extends ConsumerWidget {
   const VeiculeViewWidget({super.key});
@@ -19,11 +20,11 @@ class VeiculeViewWidget extends ConsumerWidget {
         loading: () => const Center(child: CircularProgressIndicator()),
         data: (veiculeList) {
           return Scaffold(
-            backgroundColor: Theme.of(context).colorScheme.secondary,
+            backgroundColor: Theme.of(context).colorScheme.background,
             appBar: AppBar(
               backgroundColor: Theme.of(context).colorScheme.primary,
             ),
-            floatingActionButton: FloatingActionButton(onPressed: () {}),
+            floatingActionButton: fab(context),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerDocked,
             bottomNavigationBar: appBottomBar(context, ref),
@@ -37,7 +38,7 @@ class VeiculeViewWidget extends ConsumerWidget {
                 return Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Card(
-                    color: Theme.of(context).colorScheme.primary,
+                    color: Theme.of(context).colorScheme.secondary,
                     child: InkWell(
                       borderRadius: BorderRadius.circular(12),
                       onTap: () {
@@ -45,6 +46,7 @@ class VeiculeViewWidget extends ConsumerWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
+                            maintainState: true,
                             builder: (context) => VeiculeInfoView(
                               selectedVeicule: veiculeList[index],
                             ),
@@ -56,7 +58,7 @@ class VeiculeViewWidget extends ConsumerWidget {
                           Text(
                             veiculeList[index].str_license,
                             style: TextStyle(
-                              color: Theme.of(context).colorScheme.onPrimary,
+                              color: Theme.of(context).colorScheme.onSecondary,
                             ),
                           ),
                           Text(

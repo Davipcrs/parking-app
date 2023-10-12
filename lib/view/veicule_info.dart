@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parking_app/model/veicule_model.dart';
 import 'package:parking_app/view/bottom_app_bar.dart';
+import 'package:parking_app/view/fab.dart';
 
 class VeiculeInfoView extends ConsumerWidget {
   const VeiculeInfoView({super.key, required this.selectedVeicule});
@@ -14,7 +15,7 @@ class VeiculeInfoView extends ConsumerWidget {
         backgroundColor: Theme.of(context).colorScheme.primary,
       ),
       bottomNavigationBar: appBottomBar(context, ref),
-      floatingActionButton: FloatingActionButton(onPressed: () {}),
+      floatingActionButton: fab(context),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: Center(
         child: Column(
@@ -47,6 +48,12 @@ class VeiculeInfoView extends ConsumerWidget {
             ),
             Text(
               selectedVeicule.id_veiculo.toString(),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Return'),
             )
           ],
         ),

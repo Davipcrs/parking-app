@@ -27,7 +27,22 @@ class SubscriberViewWidget extends ConsumerWidget {
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
           bottomNavigationBar: appBottomBar(context, ref),
-          body: Placeholder(),
+          body: GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: (itemWidth / itemHeigth),
+            ),
+            itemCount: subscriberList.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Padding(
+                padding: EdgeInsets.all(10.0),
+                child: Card(
+                  color: Theme.of(context).colorScheme.primary,
+                  // Add inkWell
+                ),
+              );
+            },
+          ),
         );
       },
     );

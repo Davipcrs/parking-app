@@ -19,7 +19,7 @@ appBottomBar(BuildContext context, WidgetRef ref) {
             onPressed: () {},
             icon: const Icon(Icons.car_rental),
           ),
-          SizedBox(
+          const SizedBox(
             width: 24,
           ),
           IconButton(
