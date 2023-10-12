@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:parking_app/controller/providers/api_services_provider.dart';
 import 'package:parking_app/view/bottom_app_bar.dart';
 
 class SubscriberViewWidget extends ConsumerWidget {
@@ -7,14 +8,28 @@ class SubscriberViewWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-      appBar: AppBar(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+    AsyncValue<dynamic> subscriberList = ref.watch(apiSubscriberProvider);
+    final itemWidth = MediaQuery.of(context).size.width / 2;
+    final itemHeigth =
+        (MediaQuery.of(context).size.height - kToolbarHeight - 24) / 5;
+
+    return subscriberList.when(
+      error: (err, stack) => Text('Error $err'),
+      loading: () => const Center(
+        child: CircularProgressIndicator(),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: appBottomBar(context, ref),
-      body: Placeholder(),
+      data: (subscriberList) {
+        return Scaffold(
+          appBar: AppBar(),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {},
+          ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+          bottomNavigationBar: appBottomBar(context, ref),
+          body: Placeholder(),
+        );
+      },
     );
   }
 }

@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parking_app/controller/providers/api_services_provider.dart';
 import 'package:parking_app/view/bottom_app_bar.dart';
+import 'package:parking_app/view/veicule_info_view.dart';
 
 class VeiculeViewWidget extends ConsumerWidget {
   const VeiculeViewWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    AsyncValue<dynamic> veiculeList = ref.watch(apiVeiculeByDateProvider);
+    AsyncValue<dynamic> veiculeList = ref.watch(apiVeiculeProvider);
     final itemWidth = MediaQuery.of(context).size.width / 2;
     final itemHeigth =
         (MediaQuery.of(context).size.height - kToolbarHeight - 24) / 5;
@@ -40,7 +41,15 @@ class VeiculeViewWidget extends ConsumerWidget {
                     child: InkWell(
                       borderRadius: BorderRadius.circular(12),
                       onTap: () {
-                        print("tapped");
+                        // Mudar depois, gambiarra!
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => VeiculeInfoView(
+                              selectedVeicule: veiculeList[index],
+                            ),
+                          ),
+                        );
                       },
                       child: Column(
                         children: [
