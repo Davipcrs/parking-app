@@ -15,10 +15,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
+        colorScheme: ColorScheme.fromSwatch(
+                primarySwatch: Colors.red, accentColor: Colors.redAccent)
+            .copyWith(brightness: Brightness.light),
         useMaterial3: true,
       ),
-      darkTheme: ThemeData.dark(
+      darkTheme: ThemeData(
+        colorScheme: ColorScheme.fromSwatch(
+                primarySwatch: Colors.deepOrange,
+                accentColor: Colors.deepOrangeAccent)
+            .copyWith(brightness: Brightness.dark),
         useMaterial3: true,
       ),
       home: const VeiculeViewWidget(),

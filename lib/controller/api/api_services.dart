@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:parking_app/model/subscriber_model.dart';
 import 'package:parking_app/model/veicule_model.dart';
 
 final dio = Dio();
@@ -63,6 +64,30 @@ class ApiServices {
       );
 
       return veiculeList;
+    } else {
+      return;
+    }
+  }
+
+  getAllSubscribers() async {
+    final url = "$endpoint/subscriber";
+    Response response;
+    response = await dio.get(url);
+    if (response.statusCode == 200) {
+      /*
+      final List result = response.data;
+      return result.map((e) => Veicule.fromJson(e)).toList();
+      */
+      final result = response.data as Map<String, dynamic>;
+      List<Subscriber> subscriberList = List.empty(growable: true);
+
+      result.forEach(
+        (key, value) {
+          subscriberList.add(Subscriber.fromJson(value));
+        },
+      );
+
+      return subscriberList;
     } else {
       return;
     }

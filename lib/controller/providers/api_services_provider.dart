@@ -12,6 +12,12 @@ final apiVeiculeProvider = FutureProvider((ref) async {
 final apiVeiculeByDateProvider = FutureProvider((ref) async {
   return await ref.watch(apiServicesProvider).getVeiculeByDate();
 });
+
+final apiSubscriberProvider = FutureProvider(
+  (ref) async {
+    return await ref.watch(apiServicesProvider).getAllSubscribers();
+  },
+);
 /*
 final apiVeiculePostProvider = FutureProvider((ref) async{
   return await ref.watch(apiServicesProvider).postVeicule(veicule);
