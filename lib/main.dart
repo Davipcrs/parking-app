@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parking_app/view/veicule_view_widget.dart';
+import 'package:parking_app/controller/go_router.dart';
 
 void main() {
   runApp(ProviderScope(child: const MyApp()));
@@ -12,7 +12,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: router,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
@@ -24,7 +25,6 @@ class MyApp extends StatelessWidget {
             seedColor: Colors.red, brightness: Brightness.dark),
         useMaterial3: true,
       ),
-      home: const VeiculeViewWidget(),
     );
   }
 }

@@ -14,10 +14,12 @@ appBottomBar(BuildContext context, WidgetRef ref) {
           IconButton(
             onPressed: () {},
             icon: const Icon(Icons.home),
+            tooltip: "Home",
           ),
           IconButton(
             onPressed: () {},
             icon: const Icon(Icons.car_rental),
+            tooltip: "Veículos",
           ),
           const SizedBox(
             width: 24,
@@ -25,10 +27,12 @@ appBottomBar(BuildContext context, WidgetRef ref) {
           IconButton(
             onPressed: () {},
             icon: const Icon(Icons.card_membership),
+            tooltip: "Mensalistas",
           ),
           IconButton(
             onPressed: () {},
             icon: const Icon(Icons.list),
+            tooltip: "Listas",
           ),
         ],
       ),

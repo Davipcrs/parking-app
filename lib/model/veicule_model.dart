@@ -24,6 +24,13 @@ class Veicule {
 
   //factory
   factory Veicule.fromJson(json) {
+    late bool haspaidearly;
+    if (json["bool_haspaidearly"] == null) {
+      haspaidearly = false;
+    } else {
+      haspaidearly = json['bool_haspaidearly'] as bool;
+    }
+
     return Veicule(
       id_veiculo: json["id_veiculo"] as int,
       str_license: json["str_license"] as String,
@@ -33,7 +40,7 @@ class Veicule {
       bool_haskey: json["bool_haskey"] as bool,
       bool_ismotorbike: json["bool_ismotorbike"] as bool,
       str_date: json["str_date"] as String,
-      bool_haspaidearly: json["bool_haspaidearly"],
+      bool_haspaidearly: haspaidearly,
     );
   }
 

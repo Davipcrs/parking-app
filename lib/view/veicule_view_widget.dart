@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:parking_app/controller/providers/api_services_provider.dart';
 import 'package:parking_app/view/bottom_app_bar.dart';
 import 'package:parking_app/view/fab.dart';
-import 'package:parking_app/view/veicule_info.dart';
 
 class VeiculeViewWidget extends ConsumerWidget {
   const VeiculeViewWidget({super.key});
@@ -42,7 +42,10 @@ class VeiculeViewWidget extends ConsumerWidget {
                     child: InkWell(
                       borderRadius: BorderRadius.circular(12),
                       onTap: () {
-                        // Mudar depois, gambiarra!
+                        context.go('/veicule-info',
+                            extra:
+                                veiculeList[index]); // Mudar depois, gambiarra!
+                        /*
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -52,27 +55,52 @@ class VeiculeViewWidget extends ConsumerWidget {
                             ),
                           ),
                         );
+                        */
                       },
                       child: Column(
                         children: [
                           Text(
-                            veiculeList[index].str_license,
+                            "Placa: ${veiculeList[index].str_license}",
                             style: TextStyle(
                               color: Theme.of(context).colorScheme.onSecondary,
                             ),
                           ),
                           Text(
-                            veiculeList[index].str_timein,
+                            "Hora de entrada: ${veiculeList[index].str_timein}",
                             style: TextStyle(
-                              color: Theme.of(context).colorScheme.onPrimary,
+                              color: Theme.of(context).colorScheme.onSecondary,
                             ),
                           ),
                           Text(
-                            veiculeList[index].str_timeout,
+                            "Hora de saída: ${veiculeList[index].str_timeout}",
                             style: TextStyle(
-                              color: Theme.of(context).colorScheme.onPrimary,
+                              color: Theme.of(context).colorScheme.onSecondary,
                             ),
-                          )
+                          ),
+                          Text(
+                            veiculeList[index].bool_haskey
+                                ? "Chave: Sim"
+                                : "Chave: Não",
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.onSecondary,
+                            ),
+                          ),
+                          Text(
+                            veiculeList[index].bool_haspaidearly
+                                ? "Pág adiantado: Sim"
+                                : "Pág adiantado: Não",
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.onSecondary,
+                            ),
+                          ),
+                          Text(
+                            veiculeList[index].bool_issubscriber
+                                ? "Mensalista: Sim"
+                                : "Mensalista: Não",
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.onSecondary,
+                            ),
+                          ),
                         ],
                       ),
                     ),

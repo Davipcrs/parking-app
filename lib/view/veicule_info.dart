@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:parking_app/model/veicule_model.dart';
 import 'package:parking_app/view/bottom_app_bar.dart';
 import 'package:parking_app/view/fab.dart';
@@ -51,7 +52,7 @@ class VeiculeInfoView extends ConsumerWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.of(context).pop();
+                context.go('/');
               },
               child: Text('Return'),
             )
