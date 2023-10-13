@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parking_app/controller/providers/api_services_provider.dart';
+import 'package:parking_app/view/app_bar.dart';
 import 'package:parking_app/view/bottom_app_bar.dart';
 import 'package:parking_app/view/fab.dart';
 
@@ -21,9 +22,7 @@ class SubscriberViewWidget extends ConsumerWidget {
       ),
       data: (subscriberList) {
         return Scaffold(
-          appBar: AppBar(
-            backgroundColor: Theme.of(context).colorScheme.primary,
-          ),
+          appBar: customAppBar(context, ref, "Mensalistas"),
           bottomNavigationBar: appBottomBar(context, ref),
           body: GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -33,10 +32,27 @@ class SubscriberViewWidget extends ConsumerWidget {
             itemCount: subscriberList.length,
             itemBuilder: (BuildContext context, int index) {
               return Padding(
-                padding: EdgeInsets.all(10.0),
+                padding: EdgeInsets.all(8.0),
                 child: Card(
-                  color: Theme.of(context).colorScheme.primary,
+                  color: Theme.of(context).colorScheme.secondary,
                   // Add inkWell
+                  child: InkWell(
+                    child: Row(
+                      children: [
+                        Column(
+                          children: [
+                            Text(
+                              subscriberList[index].str_name,
+                              style: TextStyle(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onSecondary),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
                 ),
               );
             },

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:parking_app/model/veicule_model.dart';
+import 'package:parking_app/view/app_bar.dart';
 import 'package:parking_app/view/bottom_app_bar.dart';
 import 'package:parking_app/view/fab.dart';
 
@@ -12,9 +13,8 @@ class VeiculeInfoView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.primary,
-      ),
+      appBar:
+          customAppBar(context, ref, selectedVeicule.str_license.toString()),
       bottomNavigationBar: appBottomBar(context, ref),
       floatingActionButton: fab(context),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

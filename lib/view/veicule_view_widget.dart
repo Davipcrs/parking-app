@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:parking_app/controller/providers/api_services_provider.dart';
+import 'package:parking_app/view/app_bar.dart';
 import 'package:parking_app/view/bottom_app_bar.dart';
 import 'package:parking_app/view/fab.dart';
 
@@ -23,9 +24,7 @@ class VeiculeViewWidget extends ConsumerWidget {
             // Cores
             backgroundColor: Theme.of(context).colorScheme.background,
             //App Bar
-            appBar: AppBar(
-              backgroundColor: Theme.of(context).colorScheme.primary,
-            ),
+            appBar: customAppBar(context, ref, "Veículos"),
             // FAB
             floatingActionButton: fab(context),
             floatingActionButtonLocation:
