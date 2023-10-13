@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:parking_app/model/veicule_model.dart';
 import 'package:parking_app/view/app_bar.dart';
 import 'package:parking_app/view/bottom_app_bar.dart';
-import 'package:parking_app/view/fab.dart';
 
 class VeiculeInfoView extends ConsumerWidget {
   const VeiculeInfoView({super.key, required this.selectedVeicule});
@@ -16,8 +15,6 @@ class VeiculeInfoView extends ConsumerWidget {
       appBar:
           customAppBar(context, ref, selectedVeicule.str_license.toString()),
       bottomNavigationBar: appBottomBar(context, ref),
-      floatingActionButton: fab(context),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

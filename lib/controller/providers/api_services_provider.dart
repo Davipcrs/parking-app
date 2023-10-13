@@ -2,6 +2,7 @@
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parking_app/controller/api/api_services.dart';
+import 'package:parking_app/model/veicule_model.dart';
 
 final apiServicesProvider = Provider((ref) => ApiServices());
 
@@ -18,6 +19,20 @@ final apiSubscriberProvider = FutureProvider(
     return await ref.watch(apiServicesProvider).getAllSubscribers();
   },
 );
+
+final apiPostVeiculeProvider =
+    AsyncNotifierProvider.autoDispose<VeiculeListNotifier, List<Veicule>>(
+  VeiculeListNotifier.new,
+);
+
+class VeiculeListNotifier extends AutoDisposeAsyncNotifier<List<Veicule>> {
+  @override
+  Future<List<Veicule>> build() async => [];
+
+  Future<void> postVeicule(Veicule veicule) async {
+    await ref.watch(apiServicesProvider).postVeicule(veicule);
+  }
+}
 /*
 final apiVeiculePostProvider = FutureProvider((ref) async{
   return await ref.watch(apiServicesProvider).postVeicule(veicule);

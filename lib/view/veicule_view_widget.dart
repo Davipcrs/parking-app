@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:parking_app/controller/providers/api_services_provider.dart';
+import 'package:parking_app/model/veicule_model.dart';
 import 'package:parking_app/view/app_bar.dart';
 import 'package:parking_app/view/bottom_app_bar.dart';
-import 'package:parking_app/view/fab.dart';
 
 class VeiculeViewWidget extends ConsumerWidget {
   const VeiculeViewWidget({super.key});
@@ -26,7 +26,16 @@ class VeiculeViewWidget extends ConsumerWidget {
             //App Bar
             appBar: customAppBar(context, ref, "Veículos"),
             // FAB
-            floatingActionButton: fab(context),
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {
+                // IMPLEMENT THIS IN THE
+                // ADD VEICULE VIEW!!
+                Veicule data = Veicule();
+                ref.read(apiPostVeiculeProvider.notifier).postVeicule(data);
+                ref.invalidate(apiVeiculeProvider);
+              },
+              child: const Icon(Icons.add),
+            ),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerDocked,
             //Custom Bottom Nav Bar

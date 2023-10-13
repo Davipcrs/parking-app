@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parking_app/controller/providers/api_services_provider.dart';
 import 'package:parking_app/view/app_bar.dart';
 import 'package:parking_app/view/bottom_app_bar.dart';
-import 'package:parking_app/view/fab.dart';
 
 class SubscriberViewWidget extends ConsumerWidget {
   const SubscriberViewWidget({super.key});
@@ -38,16 +37,42 @@ class SubscriberViewWidget extends ConsumerWidget {
                   // Add inkWell
                   child: InkWell(
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Column(
                           children: [
                             Text(
                               subscriberList[index].str_name,
+                              softWrap: true,
                               style: TextStyle(
                                   color: Theme.of(context)
                                       .colorScheme
                                       .onSecondary),
                             ),
+                            Text(
+                              subscriberList[index].str_license.toString(),
+                              softWrap: false,
+                              style: TextStyle(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onSecondary),
+                            ),
+                            Text(
+                              subscriberList[index].str_initdate,
+                              softWrap: false,
+                              style: TextStyle(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onSecondary),
+                            ),
+                            Text(
+                              subscriberList[index].str_enddate,
+                              softWrap: false,
+                              style: TextStyle(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onSecondary),
+                            )
                           ],
                         )
                       ],

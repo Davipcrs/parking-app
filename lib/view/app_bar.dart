@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:parking_app/controller/providers/api_services_provider.dart';
 
 customAppBar(BuildContext context, WidgetRef ref, String title) {
   return AppBar(
@@ -12,7 +13,11 @@ customAppBar(BuildContext context, WidgetRef ref, String title) {
     elevation: 0,
     actions: [
       IconButton(
-        onPressed: () {},
+        onPressed: () {
+          ref.invalidate(apiVeiculeProvider);
+          ref.invalidate(apiSubscriberProvider);
+          ref.invalidate(apiVeiculeByDateProvider);
+        },
         icon: Icon(
           Icons.refresh,
           color: Theme.of(context).colorScheme.onPrimary,
