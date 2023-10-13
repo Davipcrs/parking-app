@@ -20,86 +20,114 @@ class VeiculeViewWidget extends ConsumerWidget {
         loading: () => const Center(child: CircularProgressIndicator()),
         data: (veiculeList) {
           return Scaffold(
+            // Cores
             backgroundColor: Theme.of(context).colorScheme.background,
+            //App Bar
             appBar: AppBar(
               backgroundColor: Theme.of(context).colorScheme.primary,
             ),
+            // FAB
             floatingActionButton: fab(context),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerDocked,
+            //Custom Bottom Nav Bar
             bottomNavigationBar: appBottomBar(context, ref),
+            // Real Widget
             body: GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: (itemWidth / itemHeigth),
+                crossAxisCount: 2, // Quantity of columns
+                childAspectRatio: (itemWidth / itemHeigth), //Size of the Cards
               ),
               itemCount: veiculeList.length,
               itemBuilder: (BuildContext context, int index) {
                 return Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: Card(
                     color: Theme.of(context).colorScheme.secondary,
                     child: InkWell(
                       borderRadius: BorderRadius.circular(12),
+                      // InkWell Click Handle
                       onTap: () {
-                        context.go('/veicule-info',
-                            extra:
-                                veiculeList[index]); // Mudar depois, gambiarra!
-                        /*
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            maintainState: true,
-                            builder: (context) => VeiculeInfoView(
-                              selectedVeicule: veiculeList[index],
-                            ),
-                          ),
+                        // Go Route: This go to the Veicule info Widget!
+                        context.go(
+                          '/veicule-info',
+                          extra: veiculeList[index],
                         );
-                        */
                       },
-                      child: Column(
+                      // Data display
+                      // Reed carefully.
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            "Placa: ${veiculeList[index].str_license}",
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.onSecondary,
+                          Padding(
+                            padding: const EdgeInsets.only(right: 4),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Placa: ${veiculeList[index].str_license}",
+                                  style: TextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSecondary,
+                                      fontSize: 16),
+                                ),
+                                Text(
+                                  "Entrada: ${veiculeList[index].str_timein}",
+                                  style: TextStyle(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondary,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                Text(
+                                  "Saída: ${veiculeList[index].str_timeout}",
+                                  style: TextStyle(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondary,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          Text(
-                            "Hora de entrada: ${veiculeList[index].str_timein}",
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.onSecondary,
-                            ),
+                          Column(
+                            children: [
+                              Icon(Icons.monetization_on,
+                                  color: veiculeList[index].bool_haspaidearly
+                                      ? Colors.green.shade700
+                                      : Theme.of(context)
+                                          .colorScheme
+                                          .onSecondary,
+                                  size: 20),
+                              Icon(Icons.key,
+                                  color: veiculeList[index].bool_haskey
+                                      ? Colors.green.shade700
+                                      : Theme.of(context)
+                                          .colorScheme
+                                          .onSecondary,
+                                  size: 20),
+                            ],
                           ),
-                          Text(
-                            "Hora de saída: ${veiculeList[index].str_timeout}",
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.onSecondary,
-                            ),
-                          ),
-                          Text(
-                            veiculeList[index].bool_haskey
-                                ? "Chave: Sim"
-                                : "Chave: Não",
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.onSecondary,
-                            ),
-                          ),
-                          Text(
-                            veiculeList[index].bool_haspaidearly
-                                ? "Pág adiantado: Sim"
-                                : "Pág adiantado: Não",
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.onSecondary,
-                            ),
-                          ),
-                          Text(
-                            veiculeList[index].bool_issubscriber
-                                ? "Mensalista: Sim"
-                                : "Mensalista: Não",
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.onSecondary,
-                            ),
+                          Column(
+                            children: [
+                              Icon(Icons.card_membership,
+                                  color: veiculeList[index].bool_issubscriber
+                                      ? Colors.green.shade700
+                                      : Theme.of(context)
+                                          .colorScheme
+                                          .onSecondary,
+                                  size: 20),
+                              Icon(Icons.motorcycle,
+                                  color: veiculeList[index].bool_ismotorbike
+                                      ? Colors.green.shade700
+                                      : Theme.of(context)
+                                          .colorScheme
+                                          .onSecondary,
+                                  size: 20),
+                            ],
                           ),
                         ],
                       ),
