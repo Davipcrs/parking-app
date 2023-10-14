@@ -10,9 +10,6 @@ class SubscriberViewWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     AsyncValue<dynamic> subscriberList = ref.watch(apiSubscriberProvider);
-    final itemWidth = MediaQuery.of(context).size.width / 2;
-    final itemHeigth =
-        (MediaQuery.of(context).size.height - kToolbarHeight - 24) / 5;
 
     return subscriberList.when(
       error: (err, stack) => Text('Error $err'),
@@ -23,15 +20,11 @@ class SubscriberViewWidget extends ConsumerWidget {
         return Scaffold(
           appBar: customAppBar(context, ref, "Mensalistas"),
           bottomNavigationBar: appBottomBar(context, ref),
-          body: GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: (itemWidth / itemHeigth),
-            ),
+          body: ListView.builder(
             itemCount: subscriberList.length,
             itemBuilder: (BuildContext context, int index) {
               return Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
                 child: Card(
                   color: Theme.of(context).colorScheme.secondary,
                   // Add inkWell
@@ -50,7 +43,7 @@ class SubscriberViewWidget extends ConsumerWidget {
                                       .onSecondary),
                             ),
                             Text(
-                              subscriberList[index].str_license.toString(),
+                              "Placa: ${subscriberList[index].str_license.toString()}",
                               softWrap: false,
                               style: TextStyle(
                                   color: Theme.of(context)
@@ -58,7 +51,7 @@ class SubscriberViewWidget extends ConsumerWidget {
                                       .onSecondary),
                             ),
                             Text(
-                              subscriberList[index].str_initdate,
+                              "Início: ${subscriberList[index].str_initdate}",
                               softWrap: false,
                               style: TextStyle(
                                   color: Theme.of(context)
@@ -66,7 +59,7 @@ class SubscriberViewWidget extends ConsumerWidget {
                                       .onSecondary),
                             ),
                             Text(
-                              subscriberList[index].str_enddate,
+                              "Final: ${subscriberList[index].str_enddate}",
                               softWrap: false,
                               style: TextStyle(
                                   color: Theme.of(context)
