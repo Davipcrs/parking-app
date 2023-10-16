@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:parking_app/controller/providers/add_veicule_provider.dart';
 import 'package:parking_app/controller/providers/api_services_provider.dart';
 import 'package:parking_app/view/app_bar.dart';
 
@@ -10,6 +11,7 @@ class AddVeiculeWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     TimeOfDay timeIn = TimeOfDay.now();
     TextEditingController searchSubscribers = TextEditingController();
+    TextEditingController licenseController = TextEditingController();
     AsyncValue<dynamic> subscriberList = ref.watch(apiSubscriberProvider);
     return subscriberList.when(
       error: (err, stack) => Text('Error $err'),
@@ -39,14 +41,27 @@ class AddVeiculeWidget extends ConsumerWidget {
                     filled: true,
                     contentPadding: EdgeInsets.symmetric(vertical: 5.0),
                   ),
-                  onSelected: (value) {},
+                  onSelected: (value) {
+                    int i = 0;
+                    while (value != subscriberList[i].str_name.toString()) {
+                      i = i + 1;
+                    }
+                    // Manter o Provider, pode se tornar necessário.
+                    ref.read(addVeiculeSelectedSubscriber.notifier).state =
+                        subscriberList[i]!;
+                    // Manter o Provider, pode se tornar necessário.
+                    licenseController.text =
+                        subscriberList[i].str_license.toString();
+                  },
                 ),
                 Row(
                   children: [
                     SizedBox(
                       width: (MediaQuery.of(context).size.width / 2) - 36,
                       height: MediaQuery.of(context).size.height / 8,
-                      child: TextField(),
+                      child: TextField(
+                        controller: licenseController,
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
