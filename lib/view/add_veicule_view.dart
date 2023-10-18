@@ -13,6 +13,7 @@ class AddVeiculeWidget extends ConsumerWidget {
     TextEditingController searchSubscribers = TextEditingController();
     TextEditingController licenseController = TextEditingController();
     AsyncValue<dynamic> subscriberList = ref.watch(apiSubscriberProvider);
+    bool licenseValidator = ref.watch(addVeiculeLicenseValidator);
     return subscriberList.when(
       error: (err, stack) => Text('Error $err'),
       loading: () => const Center(child: CircularProgressIndicator()),
@@ -61,6 +62,11 @@ class AddVeiculeWidget extends ConsumerWidget {
                       height: MediaQuery.of(context).size.height / 8,
                       child: TextField(
                         controller: licenseController,
+                        decoration: InputDecoration(
+                            labelText: "Placa do carro",
+                            errorText: licenseValidator
+                                ? null
+                                : "Coloque uma placa válida"),
                       ),
                     ),
                     Padding(
@@ -76,7 +82,19 @@ class AddVeiculeWidget extends ConsumerWidget {
                       ),
                     )
                   ],
-                )
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      if (licenseController.text.length == 7) {
+                        ref.read(addVeiculeLicenseValidator.notifier).state =
+                            true;
+                        // API POST
+                      } else {
+                        ref.read(addVeiculeLicenseValidator.notifier).state =
+                            false;
+                      }
+                    },
+                    child: const Text("Add Veicule"))
               ],
             ),
           ),

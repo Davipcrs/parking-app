@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:parking_app/controller/providers/add_veicule_provider.dart';
 import 'package:parking_app/controller/providers/api_services_provider.dart';
 import 'package:parking_app/view/app_bar.dart';
 import 'package:parking_app/view/bottom_app_bar.dart';
@@ -29,6 +30,8 @@ class VeiculeViewWidget extends ConsumerWidget {
               onPressed: () {
                 // IMPLEMENT THIS IN THE
                 // ADD VEICULE VIEW!!
+                ref.invalidate(addVeiculeLicenseValidator);
+                ref.invalidate(addVeiculeSelectedSubscriber);
                 context.go("/add-veicule");
               },
               child: const Icon(Icons.add),

@@ -6,3 +6,5 @@ import 'package:parking_app/model/subscriber_model.dart';
 // Um veículo for adicionado.
 final addVeiculeSelectedSubscriber =
     StateProvider<Subscriber>((ref) => Subscriber());
+
+final addVeiculeLicenseValidator = StateProvider((ref) => true);
