@@ -27,8 +27,7 @@ class AddVeiculeWidget extends ConsumerWidget {
     }
     TextEditingController searchSubscribers = TextEditingController();
     TextEditingController licenseController = TextEditingController();
-    licenseController.text =
-        ref.watch(addVeiculeSelectedSubscriber).str_license ?? "";
+    licenseController.text = ref.watch(addVeiculeLicenseController);
     AsyncValue<dynamic> subscriberList = ref.watch(apiSubscriberProvider);
 
     // Need Providers!
@@ -74,6 +73,8 @@ class AddVeiculeWidget extends ConsumerWidget {
                     // Manter o Provider, pode se tornar necessário.
                     ref.read(addVeiculeSelectedSubscriber.notifier).state =
                         subscriberList[i]!;
+                    ref.read(addVeiculeLicenseController.notifier).state =
+                        ref.watch(addVeiculeSelectedSubscriber).str_license!;
                     // Manter o Provider, pode se tornar necessário.
                     //licenseController.text =
                     //    subscriberList[i].str_license.toString();
@@ -91,6 +92,10 @@ class AddVeiculeWidget extends ConsumerWidget {
                             errorText: licenseValidator
                                 ? null
                                 : "Coloque uma placa válida"),
+                        onEditingComplete: () {
+                          ref.read(addVeiculeLicenseController.notifier).state =
+                              licenseController.text;
+                        },
                       ),
                     ),
                     Padding(
@@ -98,6 +103,8 @@ class AddVeiculeWidget extends ConsumerWidget {
                           top: 8.0, left: 8.0, bottom: 8.0),
                       child: ElevatedButton(
                         onPressed: () async {
+                          ref.read(addVeiculeLicenseController.notifier).state =
+                              licenseController.text;
                           ref.read(addVeiculeTimeIn.notifier).state =
                               await timePicker(context, timeIn) ?? timeIn;
                         },
@@ -138,6 +145,10 @@ class AddVeiculeWidget extends ConsumerWidget {
                                     value: hasKey,
                                     onChanged: (value) {
                                       ref
+                                          .read(addVeiculeLicenseController
+                                              .notifier)
+                                          .state = licenseController.text;
+                                      ref
                                           .read(addVeiculeHasKey.notifier)
                                           .state = value;
                                     },
@@ -161,6 +172,10 @@ class AddVeiculeWidget extends ConsumerWidget {
                                         Theme.of(context).colorScheme.onPrimary,
                                     value: isSubscriber,
                                     onChanged: (value) {
+                                      ref
+                                          .read(addVeiculeLicenseController
+                                              .notifier)
+                                          .state = licenseController.text;
                                       ref
                                           .read(addVeiculeIsSubscriber.notifier)
                                           .state = value;
@@ -207,6 +222,10 @@ class AddVeiculeWidget extends ConsumerWidget {
                                     value: isMotorBike,
                                     onChanged: (value) {
                                       ref
+                                          .read(addVeiculeLicenseController
+                                              .notifier)
+                                          .state = licenseController.text;
+                                      ref
                                           .read(addVeiculeIsMotorBike.notifier)
                                           .state = value;
                                     },
@@ -230,6 +249,10 @@ class AddVeiculeWidget extends ConsumerWidget {
                                         Theme.of(context).colorScheme.onPrimary,
                                     value: hasPaidEarly,
                                     onChanged: (value) {
+                                      ref
+                                          .read(addVeiculeLicenseController
+                                              .notifier)
+                                          .state = licenseController.text;
                                       ref
                                           .read(addVeiculeHasPaidEarly.notifier)
                                           .state = value;
@@ -264,7 +287,7 @@ class AddVeiculeWidget extends ConsumerWidget {
                           ref.invalidate(addVeiculeHasPaidEarly);
                           ref.invalidate(addVeiculeLicenseValidator);
                           ref.invalidate(addVeiculeTimeIn);
-                          ref.invalidate(apiVeiculeByDateProvider);
+                          ref.invalidate(addVeiculeLicenseController);
 
                           context.pop();
                         },
@@ -306,7 +329,6 @@ class AddVeiculeWidget extends ConsumerWidget {
                                 .read(apiPostVeiculeProvider.notifier)
                                 .postVeicule(data);
 
-                            print(data.toJson());
                             // in the JSON pass the licenseController.text in UPPERCASE.
                             // API POST
 
@@ -314,6 +336,10 @@ class AddVeiculeWidget extends ConsumerWidget {
                             ref.invalidate(addVeiculeIsSubscriber);
                             ref.invalidate(addVeiculeIsMotorBike);
                             ref.invalidate(addVeiculeHasPaidEarly);
+                            ref.invalidate(addVeiculeLicenseValidator);
+                            ref.invalidate(addVeiculeTimeIn);
+                            ref.invalidate(addVeiculeLicenseController);
+                            ref.invalidate(apiVeiculeByDateProvider);
 
                             context.pop();
                           } else {

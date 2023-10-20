@@ -14,6 +14,7 @@ final addVeiculeHasKey = StateProvider((ref) => false);
 final addVeiculeIsSubscriber = StateProvider((ref) => false);
 final addVeiculeIsMotorBike = StateProvider((ref) => false);
 final addVeiculeHasPaidEarly = StateProvider((ref) => false);
+final addVeiculeLicenseController = StateProvider((ref) => "");
 
 final addVeiculeTimeIn = StateProvider(
   (ref) {

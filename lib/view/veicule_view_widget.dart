@@ -85,10 +85,10 @@ class VeiculeViewWidget extends ConsumerWidget {
                                 Text(
                                   "Placa: ${veiculeList[index].str_license}",
                                   style: TextStyle(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onSecondary,
-                                      fontSize: 16),
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondary,
+                                  ),
                                 ),
                                 Text(
                                   "Entrada: ${veiculeList[index].str_timein}",
@@ -96,7 +96,6 @@ class VeiculeViewWidget extends ConsumerWidget {
                                     color: Theme.of(context)
                                         .colorScheme
                                         .onSecondary,
-                                    fontSize: 14,
                                   ),
                                 ),
                                 Text(
@@ -105,7 +104,6 @@ class VeiculeViewWidget extends ConsumerWidget {
                                     color: Theme.of(context)
                                         .colorScheme
                                         .onSecondary,
-                                    fontSize: 14,
                                   ),
                                 ),
                               ],
