@@ -50,8 +50,18 @@ class VeiculeViewWidget extends ConsumerWidget {
               itemBuilder: (BuildContext context, int index) {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Card(
-                    color: Theme.of(context).colorScheme.secondary,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          Theme.of(context).colorScheme.primary,
+                          Theme.of(context).colorScheme.secondary
+                        ],
+                      ),
+                    ),
                     child: InkWell(
                       borderRadius: BorderRadius.circular(12),
                       // InkWell Click Handle

@@ -25,8 +25,18 @@ class SubscriberViewWidget extends ConsumerWidget {
             itemBuilder: (BuildContext context, int index) {
               return Padding(
                 padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
-                child: Card(
-                  color: Theme.of(context).colorScheme.secondary,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        Theme.of(context).colorScheme.primary,
+                        Theme.of(context).colorScheme.secondary
+                      ],
+                    ),
+                  ),
                   // Add inkWell
                   child: InkWell(
                     child: Row(

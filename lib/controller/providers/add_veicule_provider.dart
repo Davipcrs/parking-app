@@ -8,3 +8,8 @@ final addVeiculeSelectedSubscriber =
     StateProvider<Subscriber>((ref) => Subscriber());
 
 final addVeiculeLicenseValidator = StateProvider((ref) => true);
+
+final addVeiculeHasKey = StateProvider((ref) => false);
+final addVeiculeIsSubscriber = StateProvider((ref) => false);
+final addVeiculeIsMotorBike = StateProvider((ref) => false);
+final addVeiculeHasPaidEarly = StateProvider((ref) => false);
