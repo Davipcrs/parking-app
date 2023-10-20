@@ -11,7 +11,7 @@ class VeiculeViewWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    AsyncValue<dynamic> veiculeList = ref.watch(apiVeiculeProvider);
+    AsyncValue<dynamic> veiculeList = ref.watch(apiVeiculeByDateProvider);
     final itemWidth = MediaQuery.of(context).size.width / 2;
     final itemHeigth =
         (MediaQuery.of(context).size.height - kToolbarHeight - 24) / 5;
@@ -32,7 +32,7 @@ class VeiculeViewWidget extends ConsumerWidget {
                 // ADD VEICULE VIEW!!
                 ref.invalidate(addVeiculeLicenseValidator);
                 ref.invalidate(addVeiculeSelectedSubscriber);
-                context.go("/add-veicule");
+                context.push("/add-veicule");
               },
               child: const Icon(Icons.add),
             ),

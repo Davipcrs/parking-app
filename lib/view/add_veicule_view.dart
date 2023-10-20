@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:parking_app/controller/providers/add_veicule_provider.dart';
 import 'package:parking_app/controller/providers/api_services_provider.dart';
 import 'package:parking_app/model/veicule_model.dart';
 import 'package:parking_app/view/app_bar.dart';
+import 'package:parking_app/view/time_picker.dart';
 
 class AddVeiculeWidget extends ConsumerWidget {
   const AddVeiculeWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    TimeOfDay timeIn = TimeOfDay.now();
+    TimeOfDay timeIn = ref.watch(addVeiculeTimeIn);
     late String hour;
     late String minute;
     if (timeIn.hour.toInt() < 10) {
@@ -25,6 +27,8 @@ class AddVeiculeWidget extends ConsumerWidget {
     }
     TextEditingController searchSubscribers = TextEditingController();
     TextEditingController licenseController = TextEditingController();
+    licenseController.text =
+        ref.watch(addVeiculeSelectedSubscriber).str_license ?? "";
     AsyncValue<dynamic> subscriberList = ref.watch(apiSubscriberProvider);
 
     // Need Providers!
@@ -33,6 +37,7 @@ class AddVeiculeWidget extends ConsumerWidget {
     bool isMotorBike = ref.watch(addVeiculeIsMotorBike);
     bool hasPaidEarly = ref.watch(addVeiculeHasPaidEarly);
     bool licenseValidator = ref.watch(addVeiculeLicenseValidator);
+
     return subscriberList.when(
       error: (err, stack) => Text('Error $err'),
       loading: () => const Center(child: CircularProgressIndicator()),
@@ -70,8 +75,8 @@ class AddVeiculeWidget extends ConsumerWidget {
                     ref.read(addVeiculeSelectedSubscriber.notifier).state =
                         subscriberList[i]!;
                     // Manter o Provider, pode se tornar necessário.
-                    licenseController.text =
-                        subscriberList[i].str_license.toString();
+                    //licenseController.text =
+                    //    subscriberList[i].str_license.toString();
                   },
                 ),
                 Row(
@@ -92,7 +97,10 @@ class AddVeiculeWidget extends ConsumerWidget {
                       padding: const EdgeInsets.only(
                           top: 8.0, left: 8.0, bottom: 8.0),
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          ref.read(addVeiculeTimeIn.notifier).state =
+                              await timePicker(context, timeIn) ?? timeIn;
+                        },
                         child: SizedBox(
                           width: (MediaQuery.of(context).size.width / 2) - 36,
                           child: Center(child: Text("$hour:$minute")),
@@ -243,48 +251,82 @@ class AddVeiculeWidget extends ConsumerWidget {
                     ),
                   ],
                 ),
-                ElevatedButton(
-                    onPressed: () {
-                      if (licenseController.text.length == 7) {
-                        ref.read(addVeiculeLicenseValidator.notifier).state =
-                            true;
-                        if (timeIn.hour.toInt() < 10) {
-                          hour = "0${timeIn.hour.toString()}";
-                        } else {
-                          hour = timeIn.hour.toString();
-                        }
-                        if (timeIn.minute.toInt() < 10) {
-                          minute = "0${timeIn.minute.toString()}";
-                        } else {
-                          minute = timeIn.minute.toString();
-                        }
-                        Veicule data = Veicule(
-                          str_license: licenseController.text.toUpperCase(),
-                          str_timein: "$hour:$minute",
-                          bool_issubscriber: isSubscriber,
-                          bool_haskey: hasKey,
-                          bool_haspaidearly: hasPaidEarly,
-                          bool_ismotorbike: isMotorBike,
-                          str_date:
-                              "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
-                          // Dummy Values:
-                          id_veiculo: 0,
-                          str_timeout: "",
-                        );
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          ref.invalidate(addVeiculeHasKey);
+                          ref.invalidate(addVeiculeIsSubscriber);
+                          ref.invalidate(addVeiculeIsMotorBike);
+                          ref.invalidate(addVeiculeHasPaidEarly);
+                          ref.invalidate(addVeiculeLicenseValidator);
+                          ref.invalidate(addVeiculeTimeIn);
+                          ref.invalidate(apiVeiculeByDateProvider);
 
-                        // in the JSON pass the licenseController.text in UPPERCASE.
-                        // API POST
+                          context.pop();
+                        },
+                        child: const Text("Cancelar"),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (licenseController.text.length == 7) {
+                            ref
+                                .read(addVeiculeLicenseValidator.notifier)
+                                .state = true;
+                            if (timeIn.hour.toInt() < 10) {
+                              hour = "0${timeIn.hour.toString()}";
+                            } else {
+                              hour = timeIn.hour.toString();
+                            }
+                            if (timeIn.minute.toInt() < 10) {
+                              minute = "0${timeIn.minute.toString()}";
+                            } else {
+                              minute = timeIn.minute.toString();
+                            }
+                            Veicule data = Veicule(
+                              str_license: licenseController.text.toUpperCase(),
+                              str_timein: "$hour:$minute",
+                              bool_issubscriber: isSubscriber,
+                              bool_haskey: hasKey,
+                              bool_haspaidearly: hasPaidEarly,
+                              bool_ismotorbike: isMotorBike,
+                              str_date:
+                                  "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+                              // Dummy Values:
+                              id_veiculo: 0,
+                              str_timeout: "",
+                            );
+                            ref
+                                .read(apiPostVeiculeProvider.notifier)
+                                .postVeicule(data);
 
-                        ref.invalidate(addVeiculeHasKey);
-                        ref.invalidate(addVeiculeIsSubscriber);
-                        ref.invalidate(addVeiculeIsMotorBike);
-                        ref.invalidate(addVeiculeHasPaidEarly);
-                      } else {
-                        ref.read(addVeiculeLicenseValidator.notifier).state =
-                            false;
-                      }
-                    },
-                    child: const Text("Add Veicule"))
+                            print(data.toJson());
+                            // in the JSON pass the licenseController.text in UPPERCASE.
+                            // API POST
+
+                            ref.invalidate(addVeiculeHasKey);
+                            ref.invalidate(addVeiculeIsSubscriber);
+                            ref.invalidate(addVeiculeIsMotorBike);
+                            ref.invalidate(addVeiculeHasPaidEarly);
+
+                            context.pop();
+                          } else {
+                            ref
+                                .read(addVeiculeLicenseValidator.notifier)
+                                .state = false;
+                          }
+                        },
+                        child: const Text("Adicionar Veículo"),
+                      ),
+                    ),
+                  ],
+                )
               ],
             ),
           ),
@@ -298,3 +340,7 @@ class AddVeiculeWidget extends ConsumerWidget {
     );
   }
 }
+
+
+// Padding: The padding is the Default - For support this app remember the "padding over padding"
+// See the structure slowly, and search for the Widgets
