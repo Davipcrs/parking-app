@@ -14,7 +14,9 @@ final addVeiculeHasKey = StateProvider((ref) => false);
 final addVeiculeIsSubscriber = StateProvider((ref) => false);
 final addVeiculeIsMotorBike = StateProvider((ref) => false);
 final addVeiculeHasPaidEarly = StateProvider((ref) => false);
-final addVeiculeLicenseController = StateProvider((ref) => "");
+final addVeiculeLicenseController =
+    StateProvider((ref) => ""); // This provider save the License.
+// used for mantain the license when change the booleans
 
 final addVeiculeTimeIn = StateProvider(
   (ref) {

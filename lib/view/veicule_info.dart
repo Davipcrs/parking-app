@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:parking_app/controller/providers/edit_veicule_provider.dart';
 import 'package:parking_app/model/veicule_model.dart';
 import 'package:parking_app/view/app_bar.dart';
 import 'package:parking_app/view/bottom_app_bar.dart';
@@ -11,47 +12,267 @@ class VeiculeInfoView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Declarations
+    TextEditingController veiculeLicense = TextEditingController();
+    TextEditingController timeIn = TextEditingController();
+    TextEditingController timeOut = TextEditingController();
+    // Init State for the notifiers
+    //ref.read(editVeiculeLicenseText.notifier).state =
+    //    selectedVeicule.str_license.toString();
+    // Providers Watches
+    //veiculeLicense.text = ref.watch(editVeiculeLicenseText);
+    veiculeLicense.text = ref.watch(editVeiculeLicenseText);
+    timeIn.text = selectedVeicule.str_timein.toString();
+    timeOut.text = selectedVeicule.str_timeout.toString();
+    bool readOnly = ref.watch(editVeiculeReadOnlyFields);
+    bool hasKey = ref.watch(editVeiculeHasKey);
+    bool hasPaidEarly = ref.watch(editVeiculeHasPaidEarly);
+    bool isMotorBike = ref.watch(editVeiculeIsMotorBike);
+    bool isSubscriber = ref.watch(editVeiculeIsSubscriber);
+
     return Scaffold(
       appBar:
           customAppBar(context, ref, selectedVeicule.str_license.toString()),
       bottomNavigationBar: appBottomBar(context, ref),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.only(top: 4.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              selectedVeicule.str_license.toString(),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width / 2 - 16,
+                    height: MediaQuery.of(context).size.height / 8,
+                    child: TextField(
+                      controller: veiculeLicense,
+                      readOnly: readOnly,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "Placa",
+                      ),
+                    ),
+                  ),
+                ),
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width / 2 - 16,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (readOnly) {
+                            ref.read(editVeiculeReadOnlyFields.notifier).state =
+                                false;
+                          } else {
+                            return;
+                          }
+                        },
+                        child: Text(readOnly ? "Destravar" : "Liberado"),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-            Text(
-              selectedVeicule.str_date.toString(),
+            Row(
+              // Change for the buttons!!
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width / 2,
+                  height: MediaQuery.of(context).size.height / 8,
+                  child: TextField(
+                    controller: timeIn,
+                    readOnly: readOnly,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: "Entrada",
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width / 2,
+                  height: MediaQuery.of(context).size.height / 8,
+                  child: TextField(
+                    controller: timeOut,
+                    readOnly: readOnly,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: "Saída",
+                    ),
+                  ),
+                )
+              ],
             ),
-            Text(
-              selectedVeicule.str_timein.toString(),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width / 2 - 24,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          Theme.of(context).colorScheme.primary,
+                          Theme.of(context).colorScheme.secondary
+                        ],
+                      ),
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Switch.adaptive(
+                                activeColor:
+                                    Theme.of(context).colorScheme.onPrimary,
+                                value: hasKey,
+                                onChanged: (value) {
+                                  ref
+                                      .read(editVeiculeLicenseText.notifier)
+                                      .state = veiculeLicense.text;
+                                  ref.read(editVeiculeHasKey.notifier).state =
+                                      value;
+                                },
+                              ),
+                            ),
+                            Text(
+                              "Chave",
+                              style: TextStyle(
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Switch.adaptive(
+                                activeColor:
+                                    Theme.of(context).colorScheme.onPrimary,
+                                value: isSubscriber,
+                                onChanged: (value) {
+                                  ref
+                                      .read(editVeiculeLicenseText.notifier)
+                                      .state = veiculeLicense.text;
+                                  ref
+                                      .read(editVeiculeIsSubscriber.notifier)
+                                      .state = value;
+                                },
+                              ),
+                            ),
+                            Text(
+                              "Mensalista",
+                              style: TextStyle(
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width / 2 - 24,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          Theme.of(context).colorScheme.primary,
+                          Theme.of(context).colorScheme.secondary
+                        ],
+                      ),
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Switch.adaptive(
+                                activeColor:
+                                    Theme.of(context).colorScheme.onPrimary,
+                                value: isMotorBike,
+                                onChanged: (value) {
+                                  ref
+                                      .read(editVeiculeLicenseText.notifier)
+                                      .state = veiculeLicense.text;
+                                  ref
+                                      .read(editVeiculeIsMotorBike.notifier)
+                                      .state = value;
+                                },
+                              ),
+                            ),
+                            Text(
+                              "Moto",
+                              style: TextStyle(
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary),
+                            )
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Switch.adaptive(
+                                activeColor:
+                                    Theme.of(context).colorScheme.onPrimary,
+                                value: hasPaidEarly,
+                                onChanged: (value) {
+                                  ref
+                                      .read(editVeiculeLicenseText.notifier)
+                                      .state = veiculeLicense.text;
+                                  ref
+                                      .read(editVeiculeHasPaidEarly.notifier)
+                                      .state = value;
+                                },
+                              ),
+                            ),
+                            Text(
+                              "Pago",
+                              style: TextStyle(
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
-            Text(
-              selectedVeicule.str_timeout.toString(),
-            ),
-            Text(
-              selectedVeicule.bool_issubscriber.toString(),
-            ),
-            Text(
-              selectedVeicule.bool_ismotorbike.toString(),
-            ),
-            Text(
-              selectedVeicule.bool_haskey.toString(),
-            ),
-            Text(
-              selectedVeicule.bool_haspaidearly.toString(),
-            ),
-            Text(
-              selectedVeicule.id_veiculo.toString(),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                context.go('/');
-              },
-              child: Text('Return'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      ref.invalidate(editVeiculeReadOnlyFields);
+                      ref.invalidate(editVeiculeHasKey);
+                      ref.invalidate(editVeiculeHasPaidEarly);
+                      ref.invalidate(editVeiculeIsMotorBike);
+                      ref.invalidate(editVeiculeIsSubscriber);
+                      ref.invalidate(editVeiculeLicenseText);
+                      context.pop();
+                    },
+                    child: const Text('Cancelar'),
+                  ),
+                ),
+              ],
             )
           ],
         ),

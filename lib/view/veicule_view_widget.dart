@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:parking_app/controller/providers/add_veicule_provider.dart';
 import 'package:parking_app/controller/providers/api_services_provider.dart';
+import 'package:parking_app/controller/providers/edit_veicule_provider.dart';
+import 'package:parking_app/model/veicule_model.dart';
 import 'package:parking_app/view/app_bar.dart';
 import 'package:parking_app/view/bottom_app_bar.dart';
 
@@ -11,7 +13,7 @@ class VeiculeViewWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    AsyncValue<dynamic> veiculeList = ref.watch(apiVeiculeByDateProvider);
+    AsyncValue<dynamic> veiculeList = ref.watch(apiVeiculeProvider);
     final itemWidth = MediaQuery.of(context).size.width / 2;
     final itemHeigth =
         (MediaQuery.of(context).size.height - kToolbarHeight - 24) / 5;
@@ -66,10 +68,32 @@ class VeiculeViewWidget extends ConsumerWidget {
                       borderRadius: BorderRadius.circular(12),
                       // InkWell Click Handle
                       onTap: () {
+                        Veicule aux = veiculeList[index] as Veicule;
+                        ref.read(editVeiculeLicenseText.notifier).state =
+                            aux.str_license!;
+                        ref.read(editVeiculeHasKey.notifier).state =
+                            aux.bool_haskey!;
+                        ref.read(editVeiculeHasPaidEarly.notifier).state =
+                            aux.bool_haspaidearly!;
+                        ref.read(editVeiculeIsMotorBike.notifier).state =
+                            aux.bool_ismotorbike!;
+                        ref.read(editVeiculeIsSubscriber.notifier).state =
+                            aux.bool_issubscriber!;
                         // Go Route: This go to the Veicule info Widget!
-                        context.go(
+                        context
+                            .push(
                           '/veicule-info',
-                          extra: veiculeList[index],
+                          extra: aux,
+                        )
+                            .then(
+                          (value) {
+                            ref.invalidate(editVeiculeReadOnlyFields);
+                            ref.invalidate(editVeiculeHasKey);
+                            ref.invalidate(editVeiculeHasPaidEarly);
+                            ref.invalidate(editVeiculeIsMotorBike);
+                            ref.invalidate(editVeiculeIsSubscriber);
+                            ref.invalidate(editVeiculeLicenseText);
+                          },
                         );
                       },
                       // Data display
