@@ -98,13 +98,13 @@ class VeiculeViewWidget extends ConsumerWidget {
                       },
                       // Data display
                       // Reed carefully.
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 4),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 4.0, left: 8.0, right: 8.0, bottom: 8.0),
+                        child: Column(
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
                                   "Placa: ${veiculeList[index].str_license}",
@@ -132,44 +132,41 @@ class VeiculeViewWidget extends ConsumerWidget {
                                 ),
                               ],
                             ),
-                          ),
-                          Column(
-                            children: [
-                              Icon(Icons.monetization_on,
-                                  color: veiculeList[index].bool_haspaidearly
-                                      ? Colors.green.shade700
-                                      : Theme.of(context)
-                                          .colorScheme
-                                          .onSecondary,
-                                  size: 20),
-                              Icon(Icons.key,
-                                  color: veiculeList[index].bool_haskey
-                                      ? Colors.green.shade700
-                                      : Theme.of(context)
-                                          .colorScheme
-                                          .onSecondary,
-                                  size: 20),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Icon(Icons.card_membership,
-                                  color: veiculeList[index].bool_issubscriber
-                                      ? Colors.green.shade700
-                                      : Theme.of(context)
-                                          .colorScheme
-                                          .onSecondary,
-                                  size: 20),
-                              Icon(Icons.motorcycle,
-                                  color: veiculeList[index].bool_ismotorbike
-                                      ? Colors.green.shade700
-                                      : Theme.of(context)
-                                          .colorScheme
-                                          .onSecondary,
-                                  size: 20),
-                            ],
-                          ),
-                        ],
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Icon(Icons.monetization_on,
+                                    color: veiculeList[index].bool_haspaidearly
+                                        ? Colors.green.shade700
+                                        : Theme.of(context)
+                                            .colorScheme
+                                            .onSecondary,
+                                    size: 20),
+                                Icon(Icons.key,
+                                    color: veiculeList[index].bool_haskey
+                                        ? Colors.green.shade700
+                                        : Theme.of(context)
+                                            .colorScheme
+                                            .onSecondary,
+                                    size: 20),
+                                Icon(Icons.card_membership,
+                                    color: veiculeList[index].bool_issubscriber
+                                        ? Colors.green.shade700
+                                        : Theme.of(context)
+                                            .colorScheme
+                                            .onSecondary,
+                                    size: 20),
+                                Icon(Icons.motorcycle,
+                                    color: veiculeList[index].bool_ismotorbike
+                                        ? Colors.green.shade700
+                                        : Theme.of(context)
+                                            .colorScheme
+                                            .onSecondary,
+                                    size: 20),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

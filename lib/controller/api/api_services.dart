@@ -108,4 +108,20 @@ class ApiServices {
       return;
     }
   }
+
+  patchVeicule(Veicule veicule) async {
+    final url = "$endpoint/veicule";
+    Response response;
+    response = await dio.patch(
+      url,
+      data: veicule.toJson(),
+    );
+    if (response.statusCode == 200) {
+      final result = response.data as Map<String, dynamic>;
+      return Veicule.fromJson(result);
+    } else {
+      // raise error.
+      return;
+    }
+  }
 }
