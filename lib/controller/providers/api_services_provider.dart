@@ -33,6 +33,20 @@ class VeiculeListNotifier extends AutoDisposeAsyncNotifier<List<Veicule>> {
     await ref.watch(apiServicesProvider).postVeicule(veicule);
   }
 }
+
+final apiPatchVeiculeProvider =
+    AsyncNotifierProvider.autoDispose<VeiculePatchListNotifier, List<Veicule>>(
+  VeiculePatchListNotifier.new,
+);
+
+class VeiculePatchListNotifier extends AutoDisposeAsyncNotifier<List<Veicule>> {
+  @override
+  Future<List<Veicule>> build() async => [];
+
+  Future<void> patchVeicule(Veicule veicule) async {
+    await ref.watch(apiServicesProvider).patchVeicule(veicule);
+  }
+}
 /*
 final apiVeiculePostProvider = FutureProvider((ref) async{
   return await ref.watch(apiServicesProvider).postVeicule(veicule);

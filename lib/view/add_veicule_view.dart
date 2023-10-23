@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:parking_app/controller/providers/add_veicule_provider.dart';
 import 'package:parking_app/controller/providers/api_services_provider.dart';
 import 'package:parking_app/model/veicule_model.dart';
-import 'package:parking_app/view/app_bar.dart';
-import 'package:parking_app/view/time_picker.dart';
+import 'package:parking_app/view/utils/app_bar.dart';
+import 'package:parking_app/view/utils/time_picker.dart';
 
 class AddVeiculeWidget extends ConsumerWidget {
   const AddVeiculeWidget({super.key});

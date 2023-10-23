@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parking_app/controller/providers/api_services_provider.dart';
-import 'package:parking_app/view/app_bar.dart';
-import 'package:parking_app/view/bottom_app_bar.dart';
+import 'package:parking_app/view/utils/app_bar.dart';
+import 'package:parking_app/view/utils/bottom_app_bar.dart';
 
 class SubscriberViewWidget extends ConsumerWidget {
   const SubscriberViewWidget({super.key});

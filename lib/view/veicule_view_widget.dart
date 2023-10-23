@@ -5,8 +5,8 @@ import 'package:parking_app/controller/providers/add_veicule_provider.dart';
 import 'package:parking_app/controller/providers/api_services_provider.dart';
 import 'package:parking_app/controller/providers/edit_veicule_provider.dart';
 import 'package:parking_app/model/veicule_model.dart';
-import 'package:parking_app/view/app_bar.dart';
-import 'package:parking_app/view/bottom_app_bar.dart';
+import 'package:parking_app/view/utils/app_bar.dart';
+import 'package:parking_app/view/utils/bottom_app_bar.dart';
 
 class VeiculeViewWidget extends ConsumerWidget {
   const VeiculeViewWidget({super.key});

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:parking_app/controller/providers/api_services_provider.dart';
 import 'package:parking_app/controller/providers/edit_veicule_provider.dart';
 import 'package:parking_app/model/veicule_model.dart';
-import 'package:parking_app/view/app_bar.dart';
-import 'package:parking_app/view/bottom_app_bar.dart';
+import 'package:parking_app/view/utils/app_bar.dart';
+import 'package:parking_app/view/utils/bottom_app_bar.dart';
 
 class VeiculeInfoView extends ConsumerWidget {
   const VeiculeInfoView({super.key, required this.selectedVeicule});
@@ -110,7 +111,7 @@ class VeiculeInfoView extends ConsumerWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
-                    width: MediaQuery.of(context).size.width / 2 - 24,
+                    width: MediaQuery.of(context).size.width / 2 - 16,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
                       gradient: LinearGradient(
@@ -182,7 +183,7 @@ class VeiculeInfoView extends ConsumerWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
-                    width: MediaQuery.of(context).size.width / 2 - 24,
+                    width: MediaQuery.of(context).size.width / 2 - 16,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
                       gradient: LinearGradient(
@@ -255,7 +256,6 @@ class VeiculeInfoView extends ConsumerWidget {
               ],
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -270,6 +270,51 @@ class VeiculeInfoView extends ConsumerWidget {
                       context.pop();
                     },
                     child: const Text('Cancelar'),
+                  ),
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width / 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Veicule data = selectedVeicule;
+                      data.str_timeout =
+                          "${TimeOfDay.now().hour.toString()}:${TimeOfDay.now().minute.toString()}";
+                      ref
+                          .read(apiPatchVeiculeProvider.notifier)
+                          .patchVeicule(data);
+
+                      ref.invalidate(editVeiculeReadOnlyFields);
+                      ref.invalidate(editVeiculeHasKey);
+                      ref.invalidate(editVeiculeHasPaidEarly);
+                      ref.invalidate(editVeiculeIsMotorBike);
+                      ref.invalidate(editVeiculeIsSubscriber);
+                      ref.invalidate(editVeiculeLicenseText);
+
+                      context.pop();
+                    },
+                    child: const Text('Remover'),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (readOnly) {
+                        ref.invalidate(editVeiculeReadOnlyFields);
+                        ref.invalidate(editVeiculeHasKey);
+                        ref.invalidate(editVeiculeHasPaidEarly);
+                        ref.invalidate(editVeiculeIsMotorBike);
+                        ref.invalidate(editVeiculeIsSubscriber);
+                        ref.invalidate(editVeiculeLicenseText);
+                        context.pop();
+                      } else {
+                        return;
+                      }
+                    },
+                    child: const Text('Editar'),
                   ),
                 ),
               ],
