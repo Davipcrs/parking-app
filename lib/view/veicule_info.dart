@@ -22,9 +22,13 @@ class VeiculeInfoView extends ConsumerWidget {
     //    selectedVeicule.str_license.toString();
     // Providers Watches
     //veiculeLicense.text = ref.watch(editVeiculeLicenseText);
-    veiculeLicense.text = ref.watch(editVeiculeLicenseText);
-    timeIn.text = ref.watch(editVeiculeTimeInText);
-    timeOut.text = ref.watch(editVeiculeTimeOutText);
+    //
+    //Provider com erros, quando é usado o provider ele dá um erro devido "Rebuild" toda vez que muda-se algo.
+    //Providers ainda vão existir para alguma proxima implementação.
+    //
+    veiculeLicense.text = selectedVeicule.str_license.toString().toUpperCase();
+    timeIn.text = selectedVeicule.str_timein.toString().toUpperCase();
+    timeOut.text = selectedVeicule.str_timeout.toString().toUpperCase();
     /*
     ref.read(editVeiculeTimeInText.notifier).state =
         selectedVeicule.str_timein.toString();
@@ -95,6 +99,10 @@ class VeiculeInfoView extends ConsumerWidget {
                   height: MediaQuery.of(context).size.height / 8,
                   child: TextField(
                     controller: timeIn,
+                    onEditingComplete: () {
+                      ref.read(editVeiculeTimeInText.notifier).state =
+                          timeIn.text;
+                    },
                     readOnly: readOnly,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
@@ -108,6 +116,10 @@ class VeiculeInfoView extends ConsumerWidget {
                   child: TextField(
                     controller: timeOut,
                     readOnly: readOnly,
+                    onEditingComplete: () {
+                      ref.read(editVeiculeTimeOutText.notifier).state =
+                          timeOut.text;
+                    },
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: "Saída",
@@ -144,15 +156,10 @@ class VeiculeInfoView extends ConsumerWidget {
                                     Theme.of(context).colorScheme.onPrimary,
                                 value: hasKey,
                                 onChanged: (value) {
-                                  ref
-                                      .read(editVeiculeLicenseText.notifier)
-                                      .state = veiculeLicense.text;
-                                  ref
-                                      .read(editVeiculeTimeInText.notifier)
-                                      .state = timeIn.text;
-                                  ref
-                                      .read(editVeiculeTimeOutText.notifier)
-                                      .state = timeOut.text;
+                                  selectedVeicule.str_license =
+                                      veiculeLicense.text;
+                                  selectedVeicule.str_timein = timeIn.text;
+                                  selectedVeicule.str_timeout = timeOut.text;
                                   ref.read(editVeiculeHasKey.notifier).state =
                                       value;
                                 },
@@ -176,18 +183,13 @@ class VeiculeInfoView extends ConsumerWidget {
                                 value: isSubscriber,
                                 onChanged: (value) {
                                   ref
-                                      .read(editVeiculeLicenseText.notifier)
-                                      .state = veiculeLicense.text;
-                                  ref
-                                      .read(editVeiculeTimeInText.notifier)
-                                      .state = timeIn.text;
-                                  ref
-                                      .read(editVeiculeTimeOutText.notifier)
-                                      .state = timeOut.text;
-
-                                  ref
                                       .read(editVeiculeIsSubscriber.notifier)
                                       .state = value;
+
+                                  selectedVeicule.str_license =
+                                      veiculeLicense.text;
+                                  selectedVeicule.str_timein = timeIn.text;
+                                  selectedVeicule.str_timeout = timeOut.text;
                                 },
                               ),
                             ),
@@ -229,16 +231,10 @@ class VeiculeInfoView extends ConsumerWidget {
                                     Theme.of(context).colorScheme.onPrimary,
                                 value: isMotorBike,
                                 onChanged: (value) {
-                                  ref
-                                      .read(editVeiculeLicenseText.notifier)
-                                      .state = veiculeLicense.text;
-                                  ref
-                                      .read(editVeiculeTimeInText.notifier)
-                                      .state = timeIn.text;
-                                  ref
-                                      .read(editVeiculeTimeOutText.notifier)
-                                      .state = timeOut.text;
-
+                                  selectedVeicule.str_license =
+                                      veiculeLicense.text;
+                                  selectedVeicule.str_timein = timeIn.text;
+                                  selectedVeicule.str_timeout = timeOut.text;
                                   ref
                                       .read(editVeiculeIsMotorBike.notifier)
                                       .state = value;
@@ -262,16 +258,10 @@ class VeiculeInfoView extends ConsumerWidget {
                                     Theme.of(context).colorScheme.onPrimary,
                                 value: hasPaidEarly,
                                 onChanged: (value) {
-                                  ref
-                                      .read(editVeiculeLicenseText.notifier)
-                                      .state = veiculeLicense.text;
-                                  ref
-                                      .read(editVeiculeTimeInText.notifier)
-                                      .state = timeIn.text;
-                                  ref
-                                      .read(editVeiculeTimeOutText.notifier)
-                                      .state = timeOut.text;
-
+                                  selectedVeicule.str_license =
+                                      veiculeLicense.text;
+                                  selectedVeicule.str_timein = timeIn.text;
+                                  selectedVeicule.str_timeout = timeOut.text;
                                   ref
                                       .read(editVeiculeHasPaidEarly.notifier)
                                       .state = value;
