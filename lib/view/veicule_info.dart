@@ -322,13 +322,15 @@ class VeiculeInfoView extends ConsumerWidget {
                       ref
                           .read(apiPatchVeiculeProvider.notifier)
                           .patchVeicule(data);
-
+                      ref.invalidate(apiVeiculeByDateProvider);
                       ref.invalidate(editVeiculeReadOnlyFields);
                       ref.invalidate(editVeiculeHasKey);
                       ref.invalidate(editVeiculeHasPaidEarly);
                       ref.invalidate(editVeiculeIsMotorBike);
                       ref.invalidate(editVeiculeIsSubscriber);
                       ref.invalidate(editVeiculeLicenseText);
+                      ref.invalidate(editVeiculeTimeInText);
+                      ref.invalidate(editVeiculeTimeOutText);
 
                       context.pop();
                     },
@@ -339,13 +341,28 @@ class VeiculeInfoView extends ConsumerWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                     onPressed: () {
-                      if (readOnly) {
+                      if (readOnly == false) {
+                        Veicule data = selectedVeicule;
+                        data.str_license = veiculeLicense.text;
+                        data.str_timein = timeIn.text;
+                        data.str_timeout = timeOut.text;
+                        data.bool_haskey = hasKey;
+                        data.bool_haspaidearly = hasPaidEarly;
+                        data.bool_ismotorbike = isMotorBike;
+                        data.bool_issubscriber = isSubscriber;
+
+                        ref
+                            .read(apiPatchVeiculeProvider.notifier)
+                            .patchVeicule(data);
+                        ref.invalidate(apiVeiculeByDateProvider);
                         ref.invalidate(editVeiculeReadOnlyFields);
                         ref.invalidate(editVeiculeHasKey);
                         ref.invalidate(editVeiculeHasPaidEarly);
                         ref.invalidate(editVeiculeIsMotorBike);
                         ref.invalidate(editVeiculeIsSubscriber);
                         ref.invalidate(editVeiculeLicenseText);
+                        ref.invalidate(editVeiculeTimeInText);
+                        ref.invalidate(editVeiculeTimeOutText);
                         context.pop();
                       } else {
                         return;

@@ -331,7 +331,7 @@ class AddVeiculeWidget extends ConsumerWidget {
 
                             // in the JSON pass the licenseController.text in UPPERCASE.
                             // API POST
-
+                            ref.invalidate(apiVeiculeByDateProvider);
                             ref.invalidate(addVeiculeHasKey);
                             ref.invalidate(addVeiculeIsSubscriber);
                             ref.invalidate(addVeiculeIsMotorBike);
@@ -339,7 +339,6 @@ class AddVeiculeWidget extends ConsumerWidget {
                             ref.invalidate(addVeiculeLicenseValidator);
                             ref.invalidate(addVeiculeTimeIn);
                             ref.invalidate(addVeiculeLicenseController);
-                            ref.invalidate(apiVeiculeByDateProvider);
 
                             context.pop();
                           } else {
