@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final editVeiculeLicenseText = StateProvider((ref) => "");
+final editVeiculeTimeInText = StateProvider((ref) => "");
+final editVeiculeTimeOutText = StateProvider((ref) => "");
 
 final editVeiculeReadOnlyFields = StateProvider((ref) => true);
 

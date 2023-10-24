@@ -23,8 +23,18 @@ class VeiculeInfoView extends ConsumerWidget {
     // Providers Watches
     //veiculeLicense.text = ref.watch(editVeiculeLicenseText);
     veiculeLicense.text = ref.watch(editVeiculeLicenseText);
+    timeIn.text = ref.watch(editVeiculeTimeInText);
+    timeOut.text = ref.watch(editVeiculeTimeOutText);
+    /*
+    ref.read(editVeiculeTimeInText.notifier).state =
+        selectedVeicule.str_timein.toString();
+    ref.read(editVeiculeTimeOutText.notifier).state =
+        selectedVeicule.str_timeout.toString();
+    
+
     timeIn.text = selectedVeicule.str_timein.toString();
     timeOut.text = selectedVeicule.str_timeout.toString();
+    */
     bool readOnly = ref.watch(editVeiculeReadOnlyFields);
     bool hasKey = ref.watch(editVeiculeHasKey);
     bool hasPaidEarly = ref.watch(editVeiculeHasPaidEarly);
@@ -137,6 +147,12 @@ class VeiculeInfoView extends ConsumerWidget {
                                   ref
                                       .read(editVeiculeLicenseText.notifier)
                                       .state = veiculeLicense.text;
+                                  ref
+                                      .read(editVeiculeTimeInText.notifier)
+                                      .state = timeIn.text;
+                                  ref
+                                      .read(editVeiculeTimeOutText.notifier)
+                                      .state = timeOut.text;
                                   ref.read(editVeiculeHasKey.notifier).state =
                                       value;
                                 },
@@ -162,6 +178,13 @@ class VeiculeInfoView extends ConsumerWidget {
                                   ref
                                       .read(editVeiculeLicenseText.notifier)
                                       .state = veiculeLicense.text;
+                                  ref
+                                      .read(editVeiculeTimeInText.notifier)
+                                      .state = timeIn.text;
+                                  ref
+                                      .read(editVeiculeTimeOutText.notifier)
+                                      .state = timeOut.text;
+
                                   ref
                                       .read(editVeiculeIsSubscriber.notifier)
                                       .state = value;
@@ -210,6 +233,13 @@ class VeiculeInfoView extends ConsumerWidget {
                                       .read(editVeiculeLicenseText.notifier)
                                       .state = veiculeLicense.text;
                                   ref
+                                      .read(editVeiculeTimeInText.notifier)
+                                      .state = timeIn.text;
+                                  ref
+                                      .read(editVeiculeTimeOutText.notifier)
+                                      .state = timeOut.text;
+
+                                  ref
                                       .read(editVeiculeIsMotorBike.notifier)
                                       .state = value;
                                 },
@@ -235,6 +265,13 @@ class VeiculeInfoView extends ConsumerWidget {
                                   ref
                                       .read(editVeiculeLicenseText.notifier)
                                       .state = veiculeLicense.text;
+                                  ref
+                                      .read(editVeiculeTimeInText.notifier)
+                                      .state = timeIn.text;
+                                  ref
+                                      .read(editVeiculeTimeOutText.notifier)
+                                      .state = timeOut.text;
+
                                   ref
                                       .read(editVeiculeHasPaidEarly.notifier)
                                       .state = value;

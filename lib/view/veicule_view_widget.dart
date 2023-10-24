@@ -13,7 +13,7 @@ class VeiculeViewWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    AsyncValue<dynamic> veiculeList = ref.watch(apiVeiculeProvider);
+    AsyncValue<dynamic> veiculeList = ref.watch(apiVeiculeByDateProvider);
     final itemWidth = MediaQuery.of(context).size.width / 2;
     final itemHeigth =
         (MediaQuery.of(context).size.height - kToolbarHeight - 24) / 5;
@@ -79,6 +79,10 @@ class VeiculeViewWidget extends ConsumerWidget {
                             aux.bool_ismotorbike!;
                         ref.read(editVeiculeIsSubscriber.notifier).state =
                             aux.bool_issubscriber!;
+                        ref.read(editVeiculeTimeInText.notifier).state =
+                            aux.str_timein.toString();
+                        ref.read(editVeiculeTimeOutText.notifier).state =
+                            aux.str_timeout.toString();
                         // Go Route: This go to the Veicule info Widget!
                         context
                             .push(
@@ -93,6 +97,8 @@ class VeiculeViewWidget extends ConsumerWidget {
                             ref.invalidate(editVeiculeIsMotorBike);
                             ref.invalidate(editVeiculeIsSubscriber);
                             ref.invalidate(editVeiculeLicenseText);
+                            ref.invalidate(editVeiculeTimeInText);
+                            ref.invalidate(editVeiculeTimeOutText);
                           },
                         );
                       },
