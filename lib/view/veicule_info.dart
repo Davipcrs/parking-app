@@ -63,6 +63,9 @@ class VeiculeInfoView extends ConsumerWidget {
                     child: TextField(
                       controller: veiculeLicense,
                       readOnly: readOnly,
+                      onChanged: (value) {
+                        selectedVeicule.str_license = value;
+                      },
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: "Placa",
@@ -99,9 +102,8 @@ class VeiculeInfoView extends ConsumerWidget {
                   height: MediaQuery.of(context).size.height / 8,
                   child: TextField(
                     controller: timeIn,
-                    onEditingComplete: () {
-                      ref.read(editVeiculeTimeInText.notifier).state =
-                          timeIn.text;
+                    onChanged: (value) {
+                      selectedVeicule.str_timein = value;
                     },
                     readOnly: readOnly,
                     decoration: const InputDecoration(
@@ -116,9 +118,8 @@ class VeiculeInfoView extends ConsumerWidget {
                   child: TextField(
                     controller: timeOut,
                     readOnly: readOnly,
-                    onEditingComplete: () {
-                      ref.read(editVeiculeTimeOutText.notifier).state =
-                          timeOut.text;
+                    onChanged: (value) {
+                      selectedVeicule.str_timeout = value;
                     },
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
