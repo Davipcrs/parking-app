@@ -308,12 +308,25 @@ class VeiculeInfoView extends ConsumerWidget {
                   child: ElevatedButton(
                     onPressed: () {
                       Veicule data = selectedVeicule;
-                      data.str_timeout =
-                          "${TimeOfDay.now().hour.toString()}:${TimeOfDay.now().minute.toString()}";
+                      TimeOfDay timeOut = TimeOfDay.now();
+                      late String hour;
+                      late String minute;
+                      if (timeOut.hour.toInt() < 10) {
+                        hour = "0${timeOut.hour.toString()}";
+                      } else {
+                        hour = timeOut.hour.toString();
+                      }
+                      if (timeOut.minute.toInt() < 10) {
+                        minute = "0${timeOut.minute.toString()}";
+                      } else {
+                        minute = timeOut.minute.toString();
+                      }
+
+                      data.str_timeout = "$hour:$minute";
                       ref
                           .read(apiPatchVeiculeProvider.notifier)
                           .patchVeicule(data);
-                      ref.invalidate(apiVeiculeByDateProvider);
+
                       ref.invalidate(editVeiculeReadOnlyFields);
                       ref.invalidate(editVeiculeHasKey);
                       ref.invalidate(editVeiculeHasPaidEarly);
@@ -334,7 +347,7 @@ class VeiculeInfoView extends ConsumerWidget {
                     onPressed: () {
                       if (readOnly == false) {
                         Veicule data = selectedVeicule;
-                        data.str_license = veiculeLicense.text;
+                        data.str_license = veiculeLicense.text.toUpperCase();
                         data.str_timein = timeIn.text;
                         data.str_timeout = timeOut.text;
                         data.bool_haskey = hasKey;
@@ -345,7 +358,7 @@ class VeiculeInfoView extends ConsumerWidget {
                         ref
                             .read(apiPatchVeiculeProvider.notifier)
                             .patchVeicule(data);
-                        ref.invalidate(apiVeiculeByDateProvider);
+
                         ref.invalidate(editVeiculeReadOnlyFields);
                         ref.invalidate(editVeiculeHasKey);
                         ref.invalidate(editVeiculeHasPaidEarly);
