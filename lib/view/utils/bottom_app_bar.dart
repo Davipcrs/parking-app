@@ -13,13 +13,15 @@ appBottomBar(BuildContext context, WidgetRef ref) {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              context.go("/");
+            },
             icon: const Icon(Icons.home),
             tooltip: "Home",
           ),
           IconButton(
             onPressed: () {
-              context.go('/');
+              context.go('/veicule-view');
             },
             icon: const Icon(Icons.car_rental),
             tooltip: "Veículos",

@@ -19,8 +19,12 @@ class VeiculeViewWidget extends ConsumerWidget {
         (MediaQuery.of(context).size.height - kToolbarHeight - 24) / 5;
 
     return veiculeList.when(
-        error: (err, stack) => Text('Error $err'),
-        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (err, stack) => Center(child: Text('Error $err')),
+        loading: () => Scaffold(
+              body: const Center(child: CircularProgressIndicator()),
+              appBar: customAppBar(context, ref, "Veículos"),
+              bottomNavigationBar: appBottomBar(context, ref),
+            ),
         data: (veiculeList) {
           return Scaffold(
             // Cores
