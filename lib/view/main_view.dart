@@ -1,3 +1,4 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parking_app/view/utils/app_bar.dart';
@@ -9,9 +10,20 @@ class MainWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: customAppBar(context, ref, "2D Estacionamento"),
-      bottomNavigationBar: appBottomBar(context, ref),
-      body: const Placeholder(),
-    );
+        appBar: customAppBar(context, ref, "2D Estacionamento"),
+        bottomNavigationBar: appBottomBar(context, ref),
+        body: const Placeholder()
+        /*
+        Column(
+          children: [
+            BarChart(
+              BarChartData(),
+              swapAnimationDuration: Duration(milliseconds: 150),
+              swapAnimationCurve: Curves.linear,
+            )
+          ],
+        )
+        */
+        );
   }
 }
