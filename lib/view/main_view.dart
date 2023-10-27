@@ -12,7 +12,39 @@ class MainWidget extends ConsumerWidget {
     return Scaffold(
         appBar: customAppBar(context, ref, "2D Estacionamento"),
         bottomNavigationBar: appBottomBar(context, ref),
-        body: const Placeholder()
+        body: Padding(
+          padding: const EdgeInsets.only(top: 4.0),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width / 2 - 16,
+                      height: MediaQuery.of(context).size.height / 8,
+                      child: ElevatedButton(
+                        child: Text("Novo Veículo"),
+                        onPressed: () {},
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width / 2 - 16,
+                      height: MediaQuery.of(context).size.height / 8,
+                      child: ElevatedButton(
+                        child: Text("Remover Veículo"),
+                        onPressed: () {},
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        )
         /*
         Column(
           children: [
