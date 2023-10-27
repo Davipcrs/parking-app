@@ -19,13 +19,51 @@ class VeiculeViewWidget extends ConsumerWidget {
         (MediaQuery.of(context).size.height - kToolbarHeight - 24) / 5;
 
     return veiculeList.when(
-        error: (err, stack) => Center(child: Text('Error $err')),
-        loading: () => Scaffold(
-              body: const Center(child: CircularProgressIndicator()),
-              appBar: customAppBar(context, ref, "Veículos"),
-              bottomNavigationBar: appBottomBar(context, ref),
+      error: (err, stack) => Center(child: Text('Error $err')),
+      loading: () => Scaffold(
+        body: const Center(child: CircularProgressIndicator()),
+        appBar: customAppBar(context, ref, "Veículos"),
+        bottomNavigationBar: appBottomBar(context, ref),
+      ),
+      data: (dataList) {
+        // CONDITIONAL FOR NOT BUGGING WHEN THE GRIDVIEW IS NULL
+        // "FAKE" SCAFFOLD
+        if (dataList.length == 0) {
+          return Scaffold(
+            // Cores
+            //Custom Bottom Nav Bar
+            bottomNavigationBar: appBottomBar(context, ref),
+            backgroundColor: Theme.of(context).colorScheme.background,
+            //App Bar
+            appBar: customAppBar(context, ref, "Veículos"),
+            // FAB
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {
+                // IMPLEMENT THIS IN THE
+                // ADD VEICULE VIEW!!
+                ref.invalidate(addVeiculeLicenseValidator);
+                ref.invalidate(addVeiculeSelectedSubscriber);
+                context.push("/add-veicule").then(
+                      (value) =>
+                          Future.delayed(const Duration(milliseconds: 200))
+                              .then(
+                        (value) => ref.invalidate(apiVeiculeByDateProvider),
+                      ),
+                    );
+              },
+              child: const Icon(Icons.add),
             ),
-        data: (veiculeList) {
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerDocked,
+
+            body: const Center(
+              child: Text("Sem veículos"),
+            ),
+          );
+
+          // CONDITIONAL FOR NOT BUGGING WHEN THE GRIDVIEW IS NULL
+          // REAL SCAFFOLD
+        } else {
           return Scaffold(
             // Cores
             backgroundColor: Theme.of(context).colorScheme.background,
@@ -54,7 +92,7 @@ class VeiculeViewWidget extends ConsumerWidget {
                 crossAxisCount: 2, // Quantity of columns
                 childAspectRatio: (itemWidth / itemHeigth), //Size of the Cards
               ),
-              itemCount: veiculeList.length,
+              itemCount: dataList.length,
               itemBuilder: (BuildContext context, int index) {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -74,7 +112,7 @@ class VeiculeViewWidget extends ConsumerWidget {
                       borderRadius: BorderRadius.circular(12),
                       // InkWell Click Handle
                       onTap: () {
-                        Veicule aux = veiculeList[index] as Veicule;
+                        Veicule aux = dataList[index] as Veicule;
                         ref.read(editVeiculeLicenseText.notifier).state =
                             aux.str_license!;
                         ref.read(editVeiculeHasKey.notifier).state =
@@ -105,7 +143,9 @@ class VeiculeViewWidget extends ConsumerWidget {
                             ref.invalidate(editVeiculeLicenseText);
                             ref.invalidate(editVeiculeTimeInText);
                             ref.invalidate(editVeiculeTimeOutText);
-                            ref.invalidate(apiVeiculeByDateProvider);
+                            Future.delayed(const Duration(milliseconds: 200))
+                                .then((value) =>
+                                    ref.invalidate(apiVeiculeByDateProvider));
                           },
                         );
                       },
@@ -120,7 +160,7 @@ class VeiculeViewWidget extends ConsumerWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Placa: ${veiculeList[index].str_license}",
+                                  "Placa: ${dataList[index].str_license}",
                                   style: TextStyle(
                                     color: Theme.of(context)
                                         .colorScheme
@@ -128,7 +168,7 @@ class VeiculeViewWidget extends ConsumerWidget {
                                   ),
                                 ),
                                 Text(
-                                  "Entrada: ${veiculeList[index].str_timein}",
+                                  "Entrada: ${dataList[index].str_timein}",
                                   style: TextStyle(
                                     color: Theme.of(context)
                                         .colorScheme
@@ -136,7 +176,7 @@ class VeiculeViewWidget extends ConsumerWidget {
                                   ),
                                 ),
                                 Text(
-                                  "Saída: ${veiculeList[index].str_timeout}",
+                                  "Saída: ${dataList[index].str_timeout}",
                                   style: TextStyle(
                                     color: Theme.of(context)
                                         .colorScheme
@@ -149,28 +189,28 @@ class VeiculeViewWidget extends ConsumerWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Icon(Icons.monetization_on,
-                                    color: veiculeList[index].bool_haspaidearly
+                                    color: dataList[index].bool_haspaidearly
                                         ? Colors.green.shade700
                                         : Theme.of(context)
                                             .colorScheme
                                             .onSecondary,
                                     size: 20),
                                 Icon(Icons.key,
-                                    color: veiculeList[index].bool_haskey
+                                    color: dataList[index].bool_haskey
                                         ? Colors.green.shade700
                                         : Theme.of(context)
                                             .colorScheme
                                             .onSecondary,
                                     size: 20),
                                 Icon(Icons.card_membership,
-                                    color: veiculeList[index].bool_issubscriber
+                                    color: dataList[index].bool_issubscriber
                                         ? Colors.green.shade700
                                         : Theme.of(context)
                                             .colorScheme
                                             .onSecondary,
                                     size: 20),
                                 Icon(Icons.motorcycle,
-                                    color: veiculeList[index].bool_ismotorbike
+                                    color: dataList[index].bool_ismotorbike
                                         ? Colors.green.shade700
                                         : Theme.of(context)
                                             .colorScheme
@@ -186,19 +226,19 @@ class VeiculeViewWidget extends ConsumerWidget {
                 );
               }, /*
               children: [
-                veiculeList
+                dataList
                  
                 ListView.builder(
-                  itemCount: veiculeList.length,
+                  itemCount: dataList.length,
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
                       height: 65,
                       color: Colors.blueAccent.shade700,
                       child: Column(
                         children: [
-                          Text(veiculeList[index].str_license),
-                          Text(veiculeList[index].str_timein),
-                          Text(veiculeList[index].str_timeout)
+                          Text(dataList[index].str_license),
+                          Text(dataList[index].str_timein),
+                          Text(dataList[index].str_timeout)
                         ],
                       ),
                     );
@@ -209,6 +249,8 @@ class VeiculeViewWidget extends ConsumerWidget {
               */
             ),
           );
-        });
+        }
+      },
+    );
   }
 }
