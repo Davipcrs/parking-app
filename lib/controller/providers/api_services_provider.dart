@@ -20,6 +20,10 @@ final apiSubscriberProvider = FutureProvider(
   },
 );
 
+final apiVeiculeAnalyticsProvider = FutureProvider((ref) async {
+  return await ref.watch(apiServicesProvider).analyticsWeekEndpoint();
+});
+
 final apiPostVeiculeProvider =
     AsyncNotifierProvider.autoDispose<VeiculeListNotifier, List<Veicule>>(
   VeiculeListNotifier.new,

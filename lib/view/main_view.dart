@@ -1,8 +1,12 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:parking_app/controller/providers/add_veicule_provider.dart';
+import 'package:parking_app/controller/providers/api_services_provider.dart';
 import 'package:parking_app/view/utils/app_bar.dart';
 import 'package:parking_app/view/utils/bottom_app_bar.dart';
+import 'package:parking_app/view/utils/week_results_chart.dart';
 
 class MainWidget extends ConsumerWidget {
   const MainWidget({super.key});
@@ -24,8 +28,19 @@ class MainWidget extends ConsumerWidget {
                       width: MediaQuery.of(context).size.width / 2 - 16,
                       height: MediaQuery.of(context).size.height / 8,
                       child: ElevatedButton(
-                        child: Text("Novo Veículo"),
-                        onPressed: () {},
+                        child: const Text("Novo Veículo"),
+                        onPressed: () {
+                          ref.invalidate(addVeiculeLicenseValidator);
+                          ref.invalidate(addVeiculeSelectedSubscriber);
+                          context.push("/add-veicule").then(
+                                (value) => Future.delayed(
+                                        const Duration(milliseconds: 200))
+                                    .then(
+                                  (value) =>
+                                      ref.invalidate(apiVeiculeByDateProvider),
+                                ),
+                              );
+                        },
                       ),
                     ),
                   ),
@@ -35,13 +50,43 @@ class MainWidget extends ConsumerWidget {
                       width: MediaQuery.of(context).size.width / 2 - 16,
                       height: MediaQuery.of(context).size.height / 8,
                       child: ElevatedButton(
-                        child: Text("Remover Veículo"),
+                        child: const Text("Remover Veículo"),
                         onPressed: () {},
                       ),
                     ),
                   ),
                 ],
               ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width - 16,
+                  height: MediaQuery.of(context).size.height / 4,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          Theme.of(context).colorScheme.primary,
+                          Theme.of(context).colorScheme.secondary
+                        ],
+                      ),
+                    ),
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width - 16,
+                          child: const WeekResultChart(),
+                        ),
+                        SizedBox(child: Placeholder())
+                      ],
+                    ),
+                  ),
+                ),
+              )
             ],
           ),
         )

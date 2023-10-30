@@ -125,4 +125,15 @@ class ApiServices {
       return;
     }
   }
+
+  analyticsWeekEndpoint() async {
+    final url = "$endpoint/analytics/week";
+    Response response;
+    response = await dio.get(url);
+    if (response.statusCode == 200) {
+      return response.data;
+    } else {
+      return;
+    }
+  }
 }

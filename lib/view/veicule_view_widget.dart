@@ -76,9 +76,13 @@ class VeiculeViewWidget extends ConsumerWidget {
                 // ADD VEICULE VIEW!!
                 ref.invalidate(addVeiculeLicenseValidator);
                 ref.invalidate(addVeiculeSelectedSubscriber);
-                context
-                    .push("/add-veicule")
-                    .then((value) => ref.invalidate(apiVeiculeByDateProvider));
+                context.push("/add-veicule").then(
+                      (value) =>
+                          Future.delayed(const Duration(milliseconds: 200))
+                              .then(
+                        (value) => ref.invalidate(apiVeiculeByDateProvider),
+                      ),
+                    );
               },
               child: const Icon(Icons.add),
             ),
