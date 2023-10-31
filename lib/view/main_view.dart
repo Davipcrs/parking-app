@@ -58,9 +58,9 @@ class MainWidget extends ConsumerWidget {
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(6.0),
                 child: SizedBox(
-                  width: MediaQuery.of(context).size.width - 16,
+                  width: MediaQuery.of(context).size.width - 12,
                   height: MediaQuery.of(context).size.height / 4,
                   child: Container(
                     decoration: BoxDecoration(
@@ -78,7 +78,7 @@ class MainWidget extends ConsumerWidget {
                       scrollDirection: Axis.horizontal,
                       children: [
                         SizedBox(
-                          width: MediaQuery.of(context).size.width - 16,
+                          width: MediaQuery.of(context).size.width - 12,
                           child: const WeekResultChart(),
                         ),
                         SizedBox(child: Placeholder())

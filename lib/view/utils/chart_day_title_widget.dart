@@ -5,6 +5,7 @@ Widget getTitles(double value, TitleMeta meta) {
   const style = TextStyle(
     fontWeight: FontWeight.bold,
     fontSize: 14,
+    color: Colors.black,
   );
   String text;
   switch (value.toInt()) {
@@ -29,7 +30,6 @@ Widget getTitles(double value, TitleMeta meta) {
   }
   return SideTitleWidget(
     axisSide: meta.axisSide,
-    space: 4,
     child: Text(text, style: style),
   );
 }

@@ -5,8 +5,8 @@ import 'package:parking_app/model/veicule_model.dart';
 final dio = Dio();
 
 class ApiServices {
-  //static const __serverIP = "192.168.0.2";
-  static const __serverIP = "192.168.0.10";
+  static const __serverIP = "192.168.0.2";
+  //static const __serverIP = "192.168.0.10";
   //static const __serverHostname = "";
   static const __port = 8000;
   final endpoint = "http://$__serverIP:$__port";
