@@ -1,4 +1,3 @@
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -6,6 +5,7 @@ import 'package:parking_app/controller/providers/add_veicule_provider.dart';
 import 'package:parking_app/controller/providers/api_services_provider.dart';
 import 'package:parking_app/view/utils/app_bar.dart';
 import 'package:parking_app/view/utils/bottom_app_bar.dart';
+import 'package:parking_app/view/utils/remove_veicule_dialog.dart';
 import 'package:parking_app/view/utils/week_results_chart.dart';
 
 class MainWidget extends ConsumerWidget {
@@ -51,7 +51,13 @@ class MainWidget extends ConsumerWidget {
                       height: MediaQuery.of(context).size.height / 8,
                       child: ElevatedButton(
                         child: const Text("Remover Veículo"),
-                        onPressed: () {},
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) =>
+                                removeVeiculeDialog(context, ref),
+                          );
+                        },
                       ),
                     ),
                   ),
@@ -86,7 +92,33 @@ class MainWidget extends ConsumerWidget {
                     ),
                   ),
                 ),
-              )
+              ),
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width / 2 - 16,
+                      height: MediaQuery.of(context).size.height / 8,
+                      child: ElevatedButton(
+                        child: const Text("Novo Mensalista"),
+                        onPressed: () {},
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width / 2 - 16,
+                      height: MediaQuery.of(context).size.height / 8,
+                      child: ElevatedButton(
+                        child: const Text("Editar Mensalista"),
+                        onPressed: () {},
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         )
