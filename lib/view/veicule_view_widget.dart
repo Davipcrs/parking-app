@@ -7,6 +7,7 @@ import 'package:parking_app/controller/providers/edit_veicule_provider.dart';
 import 'package:parking_app/model/veicule_model.dart';
 import 'package:parking_app/view/utils/app_bar.dart';
 import 'package:parking_app/view/utils/bottom_app_bar.dart';
+import 'package:parking_app/view/utils/remove_veicule_dialog.dart';
 
 class VeiculeViewWidget extends ConsumerWidget {
   const VeiculeViewWidget({super.key});
@@ -115,6 +116,20 @@ class VeiculeViewWidget extends ConsumerWidget {
                     child: InkWell(
                       borderRadius: BorderRadius.circular(12),
                       // InkWell Click Handle
+                      onDoubleTap: () async {
+                        Veicule selected = dataList[index] as Veicule;
+
+                        return showDialog(
+                            context: context,
+                            builder: (context) => yesNoRemoveVeiculeDialog(
+                                context, selected, ref)).then(
+                          (value) => Future.delayed(
+                            const Duration(milliseconds: 200),
+                          ).then(
+                            (value) => ref.invalidate(apiVeiculeByDateProvider),
+                          ),
+                        );
+                      },
                       onTap: () {
                         Veicule aux = dataList[index] as Veicule;
                         ref.read(editVeiculeLicenseText.notifier).state =

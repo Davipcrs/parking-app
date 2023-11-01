@@ -20,7 +20,7 @@ removeVeiculeDialog(BuildContext context, WidgetRef ref) {
         veiculeEntries.add(DropdownMenuEntry<String>(
             value: item.str_license, label: item.str_license));
       }
-      return AlertDialog(
+      return AlertDialog.adaptive(
         title: const Text("Remover Veículo"),
         content: DropdownMenu(
           initialSelection: data[0].str_license,
@@ -65,5 +65,42 @@ removeVeiculeDialog(BuildContext context, WidgetRef ref) {
         ],
       );
     },
+  );
+}
+
+yesNoRemoveVeiculeDialog(
+    BuildContext context, Veicule selected, WidgetRef ref) {
+  return AlertDialog.adaptive(
+    title: Text("Remover: ${selected.str_license}?"),
+    actions: <Widget>[
+      TextButton(
+        onPressed: () {
+          context.pop();
+        },
+        child: const Text('Cancelar'),
+      ),
+      TextButton(
+        onPressed: () {
+          TimeOfDay timeOut = TimeOfDay.now();
+          late String hour;
+          late String minute;
+          if (timeOut.hour.toInt() < 10) {
+            hour = "0${timeOut.hour.toString()}";
+          } else {
+            hour = timeOut.hour.toString();
+          }
+          if (timeOut.minute.toInt() < 10) {
+            minute = "0${timeOut.minute.toString()}";
+          } else {
+            minute = timeOut.minute.toString();
+          }
+
+          selected.str_timeout = "$hour:$minute";
+          ref.read(apiPatchVeiculeProvider.notifier).patchVeicule(selected);
+          context.pop();
+        },
+        child: const Text('Remover'),
+      ),
+    ],
   );
 }

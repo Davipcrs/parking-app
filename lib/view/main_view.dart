@@ -56,6 +56,13 @@ class MainWidget extends ConsumerWidget {
                             context: context,
                             builder: (context) =>
                                 removeVeiculeDialog(context, ref),
+                          ).then(
+                            (value) => Future.delayed(
+                              const Duration(milliseconds: 200),
+                            ).then(
+                              (value) =>
+                                  ref.invalidate(apiVeiculeByDateProvider),
+                            ),
                           );
                         },
                       ),
