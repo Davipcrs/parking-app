@@ -31,6 +31,7 @@ removeVeiculeDialog(BuildContext context, WidgetRef ref) {
               i = i + 1;
             }
             selected = data[i];
+            // Manipulação das Datas:
             TimeOfDay timeOut = TimeOfDay.now();
             late String hour;
             late String minute;
@@ -81,6 +82,7 @@ yesNoRemoveVeiculeDialog(
       ),
       TextButton(
         onPressed: () {
+          // Manipulação das Datas:
           TimeOfDay timeOut = TimeOfDay.now();
           late String hour;
           late String minute;

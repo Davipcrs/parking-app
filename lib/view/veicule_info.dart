@@ -7,6 +7,8 @@ import 'package:parking_app/model/veicule_model.dart';
 import 'package:parking_app/view/utils/app_bar.dart';
 import 'package:parking_app/view/utils/bottom_app_bar.dart';
 
+// classe responsável pela implementação da EDIÇÃO e REMOÇÃO
+// de veículos, ler código com bastante calma. Será necessário.
 class VeiculeInfoView extends ConsumerWidget {
   const VeiculeInfoView({super.key, required this.selectedVeicule});
   final Veicule selectedVeicule;
@@ -39,6 +41,7 @@ class VeiculeInfoView extends ConsumerWidget {
     timeIn.text = selectedVeicule.str_timein.toString();
     timeOut.text = selectedVeicule.str_timeout.toString();
     */
+    //Provider de readOnly é responsável pelo bloqueio de edição.
     bool readOnly = ref.watch(editVeiculeReadOnlyFields);
     bool hasKey = ref.watch(editVeiculeHasKey);
     bool hasPaidEarly = ref.watch(editVeiculeHasPaidEarly);
@@ -157,6 +160,12 @@ class VeiculeInfoView extends ConsumerWidget {
                                     Theme.of(context).colorScheme.onPrimary,
                                 value: hasKey,
                                 onChanged: (value) {
+                                  // Salvar o estado.
+                                  // com o ref.read() é efetuado um Rebuild, portanto é necessário um
+                                  // salvar o estado.
+                                  // Já usei providers, mas todos eles quando tem o ref.read() gera um comportamento
+                                  // "reativo". Portanto podemos usar essa variável selectedVeicule, como uma parcial.
+                                  // Verificar métodos de POST.
                                   selectedVeicule.str_license =
                                       veiculeLicense.text;
                                   selectedVeicule.str_timein = timeIn.text;

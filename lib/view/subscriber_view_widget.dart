@@ -61,15 +61,7 @@ class SubscriberViewWidget extends ConsumerWidget {
                                       .onSecondary),
                             ),
                             Text(
-                              "Início: ${subscriberList[index].str_initdate}",
-                              softWrap: false,
-                              style: TextStyle(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onSecondary),
-                            ),
-                            Text(
-                              "Final: ${subscriberList[index].str_enddate}",
+                              "Vencimento: ${subscriberList[index].str_enddate}",
                               softWrap: false,
                               style: TextStyle(
                                   color: Theme.of(context)

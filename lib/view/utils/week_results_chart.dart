@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parking_app/controller/providers/api_services_provider.dart';
 import 'package:parking_app/view/utils/chart_day_title_widget.dart';
 
+// If need docs, see the fl_charts demo charts.
 class WeekResultChart extends ConsumerWidget {
   const WeekResultChart({super.key});
 
