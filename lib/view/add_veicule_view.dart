@@ -298,6 +298,7 @@ class AddVeiculeWidget extends ConsumerWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton(
                         onPressed: () {
+                          String formatedDate = "";
                           if (licenseController.text.length == 7) {
                             ref
                                 .read(addVeiculeLicenseValidator.notifier)
@@ -312,6 +313,22 @@ class AddVeiculeWidget extends ConsumerWidget {
                             } else {
                               minute = timeIn.minute.toString();
                             }
+                            if (DateTime.now().day < 10) {
+                              formatedDate =
+                                  "${formatedDate}0${DateTime.now().day}/";
+                            } else {
+                              formatedDate =
+                                  "$formatedDate${DateTime.now().day}/";
+                            }
+                            if (DateTime.now().month < 10) {
+                              formatedDate =
+                                  "${formatedDate}0${DateTime.now().month}/";
+                            } else {
+                              formatedDate =
+                                  "$formatedDate${DateTime.now().month}/";
+                            }
+                            formatedDate =
+                                "$formatedDate${DateTime.now().year}";
                             Veicule data = Veicule(
                               str_license: licenseController.text.toUpperCase(),
                               str_timein: "$hour:$minute",
@@ -319,8 +336,7 @@ class AddVeiculeWidget extends ConsumerWidget {
                               bool_haskey: hasKey,
                               bool_haspaidearly: hasPaidEarly,
                               bool_ismotorbike: isMotorBike,
-                              str_date:
-                                  "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+                              str_date: formatedDate,
                               // Dummy Values:
                               id_veiculo: 0,
                               str_timeout: "",

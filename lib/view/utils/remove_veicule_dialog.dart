@@ -13,7 +13,7 @@ removeVeiculeDialog(BuildContext context, WidgetRef ref) {
     ),
     error: (error, stackTrace) => Text("$error"),
     data: (data) {
-      Veicule selected = data[0];
+      Veicule selected = data[0] as Veicule;
       final List<DropdownMenuEntry<String>> veiculeEntries =
           <DropdownMenuEntry<String>>[];
       for (var item in data) {
@@ -27,10 +27,11 @@ removeVeiculeDialog(BuildContext context, WidgetRef ref) {
           dropdownMenuEntries: veiculeEntries,
           onSelected: (value) {
             int i = 0;
-            while (data[i].str_license.toUpperCase() != value) {
+            while (data[i].str_license.toUpperCase() !=
+                value.toString().toUpperCase()) {
               i = i + 1;
             }
-            selected = data[i];
+            selected = data[i] as Veicule;
             // Manipulação das Datas:
             TimeOfDay timeOut = TimeOfDay.now();
             late String hour;
