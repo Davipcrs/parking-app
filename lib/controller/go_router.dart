@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:parking_app/model/veicule_model.dart';
+import 'package:parking_app/view/add_subscriber_view.dart';
 import 'package:parking_app/view/add_veicule_view.dart';
 import 'package:parking_app/view/main_view.dart';
 import 'package:parking_app/view/subscriber_view_widget.dart';
@@ -40,5 +41,11 @@ final router = GoRouter(
         return const AddVeiculeWidget();
       },
     ),
+    GoRoute(
+      path: "/add-subscriber",
+      builder: (BuildContext context, GoRouterState state) {
+        return const AddSubscriberView();
+      },
+    )
   ],
 );

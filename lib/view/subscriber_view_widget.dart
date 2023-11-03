@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:parking_app/controller/providers/api_services_provider.dart';
 import 'package:parking_app/view/utils/app_bar.dart';
 import 'package:parking_app/view/utils/bottom_app_bar.dart';
@@ -13,13 +14,34 @@ class SubscriberViewWidget extends ConsumerWidget {
 
     return subscriberList.when(
       error: (err, stack) => Text('Error $err'),
-      loading: () => const Center(
-        child: CircularProgressIndicator(),
+      loading: () => Scaffold(
+        appBar: customAppBar(context, ref, "Mensalistas"),
+        bottomNavigationBar: appBottomBar(context, ref),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          child: const Icon(Icons.add),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        body: const Center(child: CircularProgressIndicator()),
       ),
       data: (subscriberList) {
         return Scaffold(
           appBar: customAppBar(context, ref, "Mensalistas"),
           bottomNavigationBar: appBottomBar(context, ref),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              context.push("/add-subscriber").then(
+                    (value) => Future.delayed(
+                      const Duration(milliseconds: 200),
+                    ).then(
+                      (value) => ref.invalidate(apiSubscriberProvider),
+                    ),
+                  );
+            },
+            child: const Icon(Icons.add),
+          ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
           body: ListView.builder(
             itemCount: subscriberList.length,
             itemBuilder: (BuildContext context, int index) {
