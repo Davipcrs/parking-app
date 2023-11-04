@@ -109,7 +109,16 @@ class MainWidget extends ConsumerWidget {
                       height: MediaQuery.of(context).size.height / 8,
                       child: ElevatedButton(
                         child: const Text("Novo Mensalista"),
-                        onPressed: () {},
+                        onPressed: () {
+                          context.push("/add-subscriber").then(
+                                (value) => Future.delayed(
+                                  const Duration(milliseconds: 200),
+                                ).then(
+                                  (value) =>
+                                      ref.invalidate(apiSubscriberProvider),
+                                ),
+                              );
+                        },
                       ),
                     ),
                   ),
