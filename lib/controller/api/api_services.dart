@@ -110,6 +110,21 @@ class ApiServices {
     }
   }
 
+  postSubcriber(Subscriber subscriber) async {
+    final url = "$endpoint/subscriber";
+    Response response;
+    response = await dio.post(
+      url,
+      data: subscriber.toJson(),
+    );
+    if (response.statusCode == 200) {
+      final result = response.data as Map<String, dynamic>;
+      return Subscriber.fromJson(result);
+    } else {
+      return;
+    }
+  }
+
   patchVeicule(Veicule veicule) async {
     final url = "$endpoint/veicule";
     Response response;
