@@ -141,6 +141,22 @@ class ApiServices {
     }
   }
 
+  patchSubscriber(Subscriber subscriber) async {
+    final url = "$endpoint/subscriber";
+    Response response;
+    response = await dio.patch(
+      url,
+      data: subscriber.toJson(),
+    );
+    if (response.statusCode == 200) {
+      final result = response.data as Map<String, dynamic>;
+      return Subscriber.fromJson(result);
+    } else {
+      // raise error.
+      return;
+    }
+  }
+
   analyticsWeekEndpoint() async {
     final url = "$endpoint/analytics/week";
     Response response;

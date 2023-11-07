@@ -67,6 +67,23 @@ class SubscriberPostListNotifier
     await ref.watch(apiServicesProvider).postSubcriber(subscriber);
   }
 }
+
+final apiPatchSubscriberProvider = AsyncNotifierProvider.autoDispose<
+    SubscriberPatchListNotifier, List<Subscriber>>(
+  SubscriberPatchListNotifier.new,
+);
+
+class SubscriberPatchListNotifier
+    extends AutoDisposeAsyncNotifier<List<Subscriber>> {
+  @override
+  Future<List<Subscriber>> build() async => [];
+
+  Future<void> patchSubscriber(Subscriber subscriber) async {
+    await ref.watch(apiServicesProvider).patchSubscriber(subscriber);
+  }
+}
+
+
 /*
 final apiVeiculePostProvider = FutureProvider((ref) async{
   return await ref.watch(apiServicesProvider).postVeicule(veicule);

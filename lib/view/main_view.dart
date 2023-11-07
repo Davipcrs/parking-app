@@ -5,6 +5,7 @@ import 'package:parking_app/controller/providers/add_veicule_provider.dart';
 import 'package:parking_app/controller/providers/api_services_provider.dart';
 import 'package:parking_app/view/utils/app_bar.dart';
 import 'package:parking_app/view/utils/bottom_app_bar.dart';
+import 'package:parking_app/view/utils/edit_subscriber_dialog.dart';
 import 'package:parking_app/view/utils/remove_veicule_dialog.dart';
 import 'package:parking_app/view/utils/week_results_chart.dart';
 
@@ -129,7 +130,21 @@ class MainWidget extends ConsumerWidget {
                       height: MediaQuery.of(context).size.height / 8,
                       child: ElevatedButton(
                         child: const Text("Editar Mensalista"),
-                        onPressed: () {},
+                        onPressed: () {
+                          AsyncValue<dynamic> subscriberList =
+                              ref.watch(apiSubscriberProvider);
+                          showDialog(
+                            context: context,
+                            builder: (context) => editSubscriberDialog(
+                                context, ref, subscriberList),
+                          ).then(
+                            (value) => Future.delayed(
+                              const Duration(milliseconds: 200),
+                            ).then(
+                              (value) => ref.invalidate(apiSubscriberProvider),
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ),

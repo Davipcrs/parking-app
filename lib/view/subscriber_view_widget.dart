@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:parking_app/controller/providers/api_services_provider.dart';
+import 'package:parking_app/model/subscriber_model.dart';
 import 'package:parking_app/view/utils/app_bar.dart';
 import 'package:parking_app/view/utils/bottom_app_bar.dart';
 
@@ -61,6 +62,16 @@ class SubscriberViewWidget extends ConsumerWidget {
                   ),
                   // Add inkWell
                   child: InkWell(
+                    onTap: () {
+                      Subscriber value = subscriberList[index] as Subscriber;
+                      context.push("/subscriber-info", extra: value).then(
+                            (value) => Future.delayed(
+                              const Duration(milliseconds: 200),
+                            ).then(
+                              (value) => ref.invalidate(apiSubscriberProvider),
+                            ),
+                          );
+                    },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
