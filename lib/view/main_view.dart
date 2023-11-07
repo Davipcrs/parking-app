@@ -130,12 +130,10 @@ class MainWidget extends ConsumerWidget {
                       child: ElevatedButton(
                         child: const Text("Editar Mensalista"),
                         onPressed: () {
-                          AsyncValue<dynamic> subscriberList =
-                              ref.watch(apiSubscriberProvider);
                           showDialog(
                             context: context,
-                            builder: (context) => editSubscriberDialog(
-                                context, ref, subscriberList),
+                            builder: (context) =>
+                                editSubscriberDialog(context, ref),
                           ).then(
                             (value) => Future.delayed(
                               const Duration(milliseconds: 200),

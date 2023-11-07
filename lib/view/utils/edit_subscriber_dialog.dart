@@ -4,9 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:parking_app/controller/providers/api_services_provider.dart';
 import 'package:parking_app/model/subscriber_model.dart';
 
-editSubscriberDialog(
-    BuildContext context, WidgetRef ref, AsyncValue<dynamic> list) {
-  AsyncValue<dynamic> subscriberList = list;
+editSubscriberDialog(BuildContext context, WidgetRef ref) {
+  AsyncValue<dynamic> subscriberList = ref.watch(apiSubscriberProvider);
   return subscriberList.when(
     loading: () => const Center(
       child: CircularProgressIndicator(),

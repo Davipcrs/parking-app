@@ -37,7 +37,9 @@ appBottomBar(BuildContext context, WidgetRef ref) {
             tooltip: "Mensalistas",
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              context.go("/filtered-view");
+            },
             icon: const Icon(Icons.list),
             tooltip: "Listas",
           ),
