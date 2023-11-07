@@ -17,14 +17,30 @@ removeVeiculeDialog(BuildContext context, WidgetRef ref) {
       final List<DropdownMenuEntry<String>> veiculeEntries =
           <DropdownMenuEntry<String>>[];
       for (var item in data) {
-if(item.str_timeout != ""){
-        veiculeEntries.add(DropdownMenuEntry<String>(
-            value: item.str_license, label: item.str_license));}
+        print(item.str_license);
+        if (item.str_timeout != "") {
+          veiculeEntries.add(DropdownMenuEntry<String>(
+              value: item.str_license, label: item.str_license));
+        }
+      }
+      if (veiculeEntries.isEmpty) {
+        return AlertDialog.adaptive(
+          title: const Text("Remover Veículo"),
+          content: const Text("Sem veículos"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                context.pop();
+              },
+              child: const Text("Cancelar"),
+            ),
+          ],
+        );
       }
       return AlertDialog.adaptive(
         title: const Text("Remover Veículo"),
         content: DropdownMenu(
-          initialSelection: data[0].str_license,
+          initialSelection: veiculeEntries[0].value,
           dropdownMenuEntries: veiculeEntries,
           onSelected: (value) {
             int i = 0;

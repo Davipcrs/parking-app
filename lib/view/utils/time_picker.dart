@@ -13,3 +13,12 @@ Future<TimeOfDay?> timePicker(context, TimeOfDay time) {
     },
   );
 }
+
+Future<DateTime?> datePicker(context, DateTime init) {
+  return showDatePicker(
+    context: context,
+    initialDate: init,
+    firstDate: DateTime(2015),
+    lastDate: DateTime(2100),
+  );
+}

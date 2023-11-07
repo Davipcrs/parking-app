@@ -4,45 +4,37 @@ import 'package:go_router/go_router.dart';
 import 'package:parking_app/controller/providers/api_services_provider.dart';
 import 'package:parking_app/model/subscriber_model.dart';
 import 'package:parking_app/view/utils/app_bar.dart';
+import 'package:parking_app/view/utils/date_formats.dart';
+import 'package:parking_app/view/utils/time_picker.dart';
 
-class AddSubscriberView extends ConsumerWidget {
+class AddSubscriberView extends ConsumerStatefulWidget {
   const AddSubscriberView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    TextEditingController nameController = TextEditingController();
-    TextEditingController licenseController = TextEditingController();
-    TextEditingController celNumberController = TextEditingController();
-    TextEditingController carModelController = TextEditingController();
-    TextEditingController weekDaysController = TextEditingController();
-    DateTime today = DateTime.now();
-    DateTime endDate = today.add(const Duration(days: 30));
-    String formatedDateInit = "";
-    String formatedDateEnd = "";
-    if (today.day < 10) {
-      formatedDateInit = "${formatedDateInit}0${today.day}/";
-    } else {
-      formatedDateInit = "$formatedDateInit${today.day}/";
-    }
-    if (today.month < 10) {
-      formatedDateInit = "${formatedDateInit}0${today.month}/";
-    } else {
-      formatedDateInit = "$formatedDateInit${today.month}/";
-    }
-    formatedDateInit = "$formatedDateInit${today.year}";
+  ConsumerState<AddSubscriberView> createState() => _AddSubscriberViewState();
+}
 
-    if (endDate.day < 10) {
-      formatedDateEnd = "${formatedDateEnd}0${endDate.day}/";
-    } else {
-      formatedDateEnd = "$formatedDateEnd${endDate.day}/";
-    }
-    if (endDate.month < 10) {
-      formatedDateEnd = "${formatedDateEnd}0${endDate.month}/";
-    } else {
-      formatedDateEnd = "$formatedDateEnd${endDate.month}/";
-    }
-    formatedDateEnd = "$formatedDateEnd${endDate.year}";
+class _AddSubscriberViewState extends ConsumerState<AddSubscriberView> {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController licenseController = TextEditingController();
+  TextEditingController celNumberController = TextEditingController();
+  TextEditingController carModelController = TextEditingController();
+  TextEditingController weekDaysController = TextEditingController();
+  DateTime today = DateTime.now();
+  late DateTime endDate;
+  late String formatedDateInit;
+  late String formatedDateEnd;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    endDate = today.add(const Duration(days: 30));
+    formatedDateInit = dateFormats(today);
+    formatedDateEnd = dateFormats(endDate);
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar(context, ref, "Adicionar Mensalista"),
       body: Padding(
@@ -183,7 +175,12 @@ class AddSubscriberView extends ConsumerWidget {
                     width: MediaQuery.of(context).size.width / 2 - 12,
                     height: MediaQuery.of(context).size.height / 8,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        today = await datePicker(context, today) ?? today;
+                        setState(() {
+                          formatedDateInit = dateFormats(today);
+                        });
+                      },
                       // Colocar os 01/02/2023 (Problema na formatação)
                       child: Text("Início: $formatedDateInit"),
                     ),
@@ -196,7 +193,13 @@ class AddSubscriberView extends ConsumerWidget {
                     width: MediaQuery.of(context).size.width / 2 - 12,
                     height: MediaQuery.of(context).size.height / 8,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        endDate = await datePicker(context, endDate) ?? endDate;
+
+                        setState(() {
+                          formatedDateEnd = dateFormats(endDate);
+                        });
+                      },
                       child: Text("Vencimento: $formatedDateEnd"),
                     ),
                   ),
