@@ -17,8 +17,9 @@ removeVeiculeDialog(BuildContext context, WidgetRef ref) {
       final List<DropdownMenuEntry<String>> veiculeEntries =
           <DropdownMenuEntry<String>>[];
       for (var item in data) {
+if(item.str_timeout != ""){
         veiculeEntries.add(DropdownMenuEntry<String>(
-            value: item.str_license, label: item.str_license));
+            value: item.str_license, label: item.str_license));}
       }
       return AlertDialog.adaptive(
         title: const Text("Remover Veículo"),
