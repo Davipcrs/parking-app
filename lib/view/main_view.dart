@@ -95,7 +95,6 @@ class MainWidget extends ConsumerWidget {
                           width: MediaQuery.of(context).size.width - 12,
                           child: const WeekResultChart(),
                         ),
-                        SizedBox(child: Placeholder())
                       ],
                     ),
                   ),
