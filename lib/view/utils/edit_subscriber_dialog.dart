@@ -23,18 +23,22 @@ editSubscriberDialog(BuildContext context, WidgetRef ref) {
       return AlertDialog.adaptive(
         title: const Text("Editar Mensalista"),
         content: SizedBox(
-          width: MediaQuery.of(context).size.width - 24,
-          child: DropdownMenu(
-            dropdownMenuEntries: subscriberEntries,
-            initialSelection: subscriberEntries[0].value,
-            onSelected: (value) {
-              int i = 0;
-              while (data[i].str_name.toUpperCase() !=
-                  value.toString().toUpperCase()) {
-                i = i + 1;
-              }
-              selectedValue = data[i] as Subscriber;
-            },
+          width: MediaQuery.of(context).size.width / 2,
+          child: ButtonTheme(
+            alignedDropdown: true,
+            child: DropdownMenu(
+              width: MediaQuery.of(context).size.width / 2,
+              dropdownMenuEntries: subscriberEntries,
+              initialSelection: subscriberEntries[0].value,
+              onSelected: (value) {
+                int i = 0;
+                while (data[i].str_name.toUpperCase() !=
+                    value.toString().toUpperCase()) {
+                  i = i + 1;
+                }
+                selectedValue = data[i] as Subscriber;
+              },
+            ),
           ),
         ),
         actions: [

@@ -11,7 +11,7 @@ class FilteredViewWidget extends ConsumerWidget {
     return Scaffold(
       appBar: customAppBar(context, ref, "2D Estacionamento"),
       bottomNavigationBar: appBottomBar(context, ref),
-      body: Placeholder(),
+      body: const Placeholder(),
     );
   }
 }
