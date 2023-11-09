@@ -5,6 +5,8 @@ import 'package:parking_app/model/veicule_model.dart';
 import 'package:parking_app/view/add_subscriber_view.dart';
 import 'package:parking_app/view/add_veicule_view.dart';
 import 'package:parking_app/view/filtered_view.dart';
+import 'package:parking_app/view/filtered_view_all_veicules.dart';
+import 'package:parking_app/view/filtered_view_expired_subscribers.dart';
 import 'package:parking_app/view/main_view.dart';
 import 'package:parking_app/view/subscriber_info.dart';
 import 'package:parking_app/view/subscriber_view_widget.dart';
@@ -62,6 +64,18 @@ final router = GoRouter(
       builder: (BuildContext context, GoRouterState state) {
         return const FilteredViewWidget();
       },
-    )
+    ),
+    GoRoute(
+      path: '/filtered-view/all-veicules',
+      builder: (BuildContext context, GoRouterState state) {
+        return const VeiculeAllViewWidget();
+      },
+    ),
+    GoRoute(
+      path: '/filtered-view/expired-subscribers',
+      builder: (BuildContext context, GoRouterState state) {
+        return const ExpiredSubscriberViewWidget();
+      },
+    ),
   ],
 );

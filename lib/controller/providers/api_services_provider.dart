@@ -21,6 +21,12 @@ final apiSubscriberProvider = FutureProvider(
   },
 );
 
+final apiExpiredSubscriberProvider = FutureProvider(
+  (ref) async {
+    return await ref.watch(apiServicesProvider).getExpiredSubscribers();
+  },
+);
+
 final apiVeiculeAnalyticsProvider = FutureProvider((ref) async {
   return await ref.watch(apiServicesProvider).analyticsWeekEndpoint();
 });

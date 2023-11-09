@@ -94,6 +94,30 @@ class ApiServices {
     }
   }
 
+  getExpiredSubscribers() async {
+    final url = "$endpoint/subscriber/expired";
+    Response response;
+    response = await dio.get(url);
+    if (response.statusCode == 200) {
+      /*
+      final List result = response.data;
+      return result.map((e) => Veicule.fromJson(e)).toList();
+      */
+      final result = response.data as Map<String, dynamic>;
+      List<Subscriber> subscriberList = List.empty(growable: true);
+
+      result.forEach(
+        (key, value) {
+          subscriberList.add(Subscriber.fromJson(value));
+        },
+      );
+
+      return subscriberList;
+    } else {
+      return;
+    }
+  }
+
   postVeicule(Veicule veicule) async {
     final url = "$endpoint/veicule";
     Response response;
